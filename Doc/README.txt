@@ -1,4 +1,4 @@
 Additional info:
 
-This set of worksheets is used in the following modules:
-Workshops 1-4 in module 4
+# Presentation at the ICAB conference
+The embedding of computer assisted physics in the Applied Physics curriculum is illustrated in the presentation in this folder. 
