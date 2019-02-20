@@ -6,6 +6,9 @@ Here I keep the adjustments to the Workshop files.
 
 The structure of the repository consists of four main parts, related to the quartiles in which the material is used. 
 
+## Doc
+Contains a presentation on the embedding of CAS in the Applied Physics curriculum.
+
 ## Main parts:
 1. Part 1: introduction + vector calculus and Electricity and Magnetism
 2. Part 2: Applications in Signals and Modeling
