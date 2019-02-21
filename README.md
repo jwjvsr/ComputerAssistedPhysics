@@ -16,5 +16,5 @@ This folder also contains a cheat-sheet.
 3. Part 3: Applications in Quantum Mechanics
 4. Part 4: Miscelaneous collection of worksheets
 
-## Playyard
+## Playground
 Try-outs and other unfinished worksheets 
