@@ -1,0 +1,4043 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    189276,       4035]
+NotebookOptionsPosition[    178606,       3779]
+NotebookOutlinePosition[    178952,       3794]
+CellTagsIndexPosition[    178909,       3791]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Remove", "[", "\"\<Global`*\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.7378305480205674`*^9, 
+  3.7378305585410748`*^9}},ExpressionUUID->"576125cf-10ea-49ad-92dd-\
+ed8eb72ee148"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Remove","rmnsm",
+   "\"There are no symbols matching \\\"\\!\\(\\*RowBox[{\\\"\\\\\\\"Global`*\
+\\\\\\\"\\\"}]\\)\\\".\"",2,1,1,17965494782887111639,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.737830562510626*^9, 
+  3.7451273042523327`*^9},ExpressionUUID->"7d502946-d64e-4ffc-848d-\
+1cc2b498c477"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"$Assumptions", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", "n", "}"}], "\[Element]", "Integers"}], " ", "\[And]", 
+   RowBox[{"n", ">", "0"}]}]}]], "Input",
+ CellChangeTimes->{{3.741940529381346*^9, 
+  3.741940564835346*^9}},ExpressionUUID->"6375ab39-f7ef-4d26-9069-\
+9a83ad4197cb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"n", "\[Element]", "Integers"}], "&&", 
+  RowBox[{"n", ">", "0"}]}]], "Output",
+ CellChangeTimes->{
+  3.7451273043642883`*^9},ExpressionUUID->"503ef154-a23c-4dc3-ae18-\
+5aa2360f3a88"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Mathematica for Engineering Systems: Part III", "Title",
+ CellChangeTimes->{{3.7373581345818424`*^9, 3.7373581436228423`*^9}, {
+   3.745124423159785*^9, 3.745124424901785*^9}, {3.7451272476409864`*^9, 
+   3.7451272497771316`*^9}, 3.7451285923863926`*^9, 
+   3.7451287595163927`*^9},ExpressionUUID->"fc94f7af-45cb-471f-861c-\
+affe7c0179f9"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Chapter",
+ CellChangeTimes->{{3.7373581528768425`*^9, 3.7373581553888426`*^9}, 
+   3.7373586392738423`*^9},ExpressionUUID->"c4e2ca6c-dd77-4d91-b0ed-\
+6511103f10d1"],
+
+Cell["\<\
+Part III continues with Discrete-time system, first difference equations,  \
+and second discrete-time Fourier Transform. \
+\>", "Text",
+ CellChangeTimes->{{3.737658689155868*^9, 3.737659043616435*^9}, {
+  3.744519007674615*^9, 3.744519052903615*^9}, {3.7445190865418916`*^9, 
+  3.7445191325844955`*^9}, {3.7451285970573926`*^9, 3.745128637745393*^9}, {
+  3.7451287653923926`*^9, 3.745128769540393*^9}, {3.7455735803879843`*^9, 
+  3.7455736267519846`*^9}},ExpressionUUID->"ede551a5-e33b-4017-9d77-\
+6ee35e84426f"],
+
+Cell[CellGroupData[{
+
+Cell["Difference Equations", "Subchapter",
+ CellChangeTimes->{{3.7419411375313463`*^9, 
+  3.741941142197346*^9}},ExpressionUUID->"6161c84e-ed37-4040-a0cb-\
+bd6fe5428cb3"],
+
+Cell[CellGroupData[{
+
+Cell["Intro", "Subsection",
+ CellChangeTimes->{{3.745481224199975*^9, 
+  3.7454812322630177`*^9}},ExpressionUUID->"118732eb-cab0-4ea1-8565-\
+b4dbae47df9a"],
+
+Cell["\<\
+The equivalence of differential equations in the discrete time domain are \
+difference equations, relating output values at a time (n \[CapitalDelta]t) \
+to input samples and previous (for causal systems) output values.\
+\>", "Text",
+ CellChangeTimes->{{3.745481237559758*^9, 
+  3.7454813774817295`*^9}},ExpressionUUID->"7c745157-f422-487b-a51a-\
+10eb6fa29d1d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["The function Fourier for the Discrete Fourier Transform", "Subsection",
+ CellChangeTimes->{{3.7454810676631274`*^9, 
+  3.745481080636171*^9}},ExpressionUUID->"37416bf9-f06c-4dbe-8797-\
+450e3a417ec1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Write", " ", "down", " ", "the", " ", "h", " ", "and", " ", "take", " ", 
+    "its", " ", "DTFT"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Clear", "[", 
+    RowBox[{"n", ",", "w"}], "]"}], "\n", 
+   RowBox[{
+    RowBox[{"h", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"1", "/", "4"}], " ", 
+       RowBox[{"DiscreteDelta", "[", 
+        RowBox[{"n", "+", "1"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"1", "/", "2"}], " ", 
+       RowBox[{"DiscreteDelta", "[", "n", "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"1", "/", "4"}], " ", 
+       RowBox[{"DiscreteDelta", "[", 
+        RowBox[{"n", "-", "1"}], "]"}]}]}]}], ";"}], "\n", 
+   RowBox[{"hTransformed", "=", 
+    RowBox[{"FourierSequenceTransform", "[", 
+     RowBox[{"h", ",", "n", ",", "w"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.7422374609607487`*^9, 
+  3.742237467945407*^9}},ExpressionUUID->"f0608e6a-9404-452c-9904-\
+0da9eb17cc2b"],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["1", "4"], " ", 
+  SuperscriptBox["\[ExponentialE]", 
+   RowBox[{
+    RowBox[{"-", "\[ImaginaryI]"}], " ", "w"}]], " ", 
+  SuperscriptBox[
+   RowBox[{"(", 
+    RowBox[{"1", "+", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"\[ImaginaryI]", " ", "w"}]]}], ")"}], "2"]}]], "Output",
+ CellChangeTimes->{3.742237506864322*^9, 3.7455724585949845`*^9, 
+  3.7456039738073463`*^9, 3.745604858150812*^9, 
+  3.7459265297364173`*^9},ExpressionUUID->"f54484ff-9be2-46cf-b7fc-\
+68705e54db5b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"x", "=", 
+   RowBox[{
+    RowBox[{"1", " ", 
+     RowBox[{"DiscreteDelta", "[", "n", "]"}]}], "+", 
+    RowBox[{"2", " ", 
+     RowBox[{"DiscreteDelta", "[", 
+      RowBox[{"n", "-", "1"}], "]"}]}], "-", 
+    RowBox[{"2", " ", 
+     RowBox[{"DiscreteDelta", "[", 
+      RowBox[{"n", "-", "2"}], "]"}]}], "+", 
+    RowBox[{"DiscreteDelta", "[", 
+     RowBox[{"n", "-", "3"}], "]"}], "+", 
+    RowBox[{"4", " ", 
+     RowBox[{"DiscreteDelta", "[", 
+      RowBox[{"n", "-", "4"}], "]"}]}], "-", 
+    RowBox[{"DiscreteDelta", "[", 
+     RowBox[{"n", "-", "5"}], "]"}], "+", 
+    RowBox[{"DiscreteDelta", "[", 
+     RowBox[{"n", "-", "6"}], "]"}], "+", 
+    RowBox[{"2", " ", 
+     RowBox[{"DiscreteDelta", "[", 
+      RowBox[{"n", "-", "7"}], "]"}]}]}]}], ";"}], "\n", 
+ RowBox[{"xTransformed", "=", 
+  RowBox[{"FourierSequenceTransform", "[", 
+   RowBox[{"x", ",", "n", ",", "w"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7422374783742156`*^9, 
+  3.742237478386697*^9}},ExpressionUUID->"bbcf9ff4-ca23-4f49-9c73-\
+0b2d307d83e7"],
+
+Cell[BoxData[
+ RowBox[{
+  SuperscriptBox["\[ExponentialE]", 
+   RowBox[{
+    RowBox[{"-", "7"}], " ", "\[ImaginaryI]", " ", "w"}]], " ", 
+  RowBox[{"(", 
+   RowBox[{"2", "+", 
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"\[ImaginaryI]", " ", "w"}]], "-", 
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"2", " ", "\[ImaginaryI]", " ", "w"}]], "+", 
+    RowBox[{"4", " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"3", " ", "\[ImaginaryI]", " ", "w"}]]}], "+", 
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"4", " ", "\[ImaginaryI]", " ", "w"}]], "-", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"5", " ", "\[ImaginaryI]", " ", "w"}]]}], "+", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["\[ExponentialE]", 
+      RowBox[{"6", " ", "\[ImaginaryI]", " ", "w"}]]}], "+", 
+    SuperscriptBox["\[ExponentialE]", 
+     RowBox[{"7", " ", "\[ImaginaryI]", " ", "w"}]]}], ")"}]}]], "Output",
+ CellChangeTimes->{3.742237509614581*^9, 3.745572459011985*^9, 
+  3.74560397552629*^9, 3.7456048598987346`*^9, 
+  3.7459265301344175`*^9},ExpressionUUID->"a4c41534-a7ad-4166-ae60-\
+7181241deca7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"z", "=", 
+  RowBox[{"InverseFourierSequenceTransform", "[", 
+   RowBox[{
+    RowBox[{"xTransformed", " ", "hTransformed"}], ",", "w", ",", "n"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.742237486883015*^9, 
+  3.7422374868914986`*^9}},ExpressionUUID->"601e75e6-ea3d-49de-9582-\
+31494fd8f44f"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\[Piecewise]", GridBox[{
+       {
+        RowBox[{"-", 
+         FractionBox["1", "4"]}], 
+        RowBox[{"n", "\[Equal]", "2"}]},
+       {
+        FractionBox["1", "4"], 
+        RowBox[{"n", "\[Equal]", 
+         RowBox[{"-", "1"}]}]},
+       {
+        FractionBox["1", "2"], 
+        RowBox[{"n", "\[Equal]", "8"}]},
+       {
+        FractionBox["3", "4"], 
+        RowBox[{
+         RowBox[{"n", "\[Equal]", "1"}], "||", 
+         RowBox[{"n", "\[Equal]", "5"}], "||", 
+         RowBox[{"n", "\[Equal]", "6"}]}]},
+       {"1", 
+        RowBox[{
+         RowBox[{"n", "\[Equal]", "0"}], "||", 
+         RowBox[{"n", "\[Equal]", "3"}]}]},
+       {
+        FractionBox["5", "4"], 
+        RowBox[{"n", "\[Equal]", "7"}]},
+       {"2", 
+        RowBox[{"n", "\[Equal]", "4"}]},
+       {"0", 
+        TagBox["True",
+         "PiecewiseDefault",
+         AutoDelete->True]}
+      },
+      AllowedDimensions->{2, Automatic},
+      Editable->True,
+      GridBoxAlignment->{
+       "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+        "RowsIndexed" -> {}},
+      GridBoxItemSize->{
+       "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+        "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.84]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}},
+      Selectable->True]}
+   },
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}},
+   GridBoxItemSize->{
+    "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+     "RowsIndexed" -> {}},
+   GridBoxSpacings->{"Columns" -> {
+       Offset[0.27999999999999997`], {
+        Offset[0.35]}, 
+       Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+       Offset[0.2], {
+        Offset[0.4]}, 
+       Offset[0.2]}, "RowsIndexed" -> {}}],
+  "Piecewise",
+  DeleteWithContents->True,
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.742237511183061*^9, 3.745572459150985*^9, 
+  3.7456039760369763`*^9, 3.745604860451398*^9, 
+  3.745926530267417*^9},ExpressionUUID->"53f340b3-d1d8-46bd-a6d1-\
+32b72ae67932"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "@", 
+  RowBox[{"InverseFourierSequenceTransform", "[", 
+   RowBox[{
+    RowBox[{"xTransformed", " ", "hTransformed", " ", "hTransformed"}], ",", 
+    "w", ",", "n"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7422374965263996`*^9, 
+  3.7422374965428686`*^9}},ExpressionUUID->"0902e689-23ff-45ab-b03e-\
+d0802533c9fc"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\[Piecewise]", GridBox[{
+       {"0.0625`", 
+        RowBox[{"n", "\[Equal]", 
+         RowBox[{"-", "2.`"}]}]},
+       {"0.125`", 
+        RowBox[{"n", "\[Equal]", "9.`"}]},
+       {"0.3125`", 
+        RowBox[{"n", "\[Equal]", "2.`"}]},
+       {"0.375`", 
+        RowBox[{"n", "\[Equal]", 
+         RowBox[{"-", "1.`"}]}]},
+       {"0.5625`", 
+        RowBox[{
+         RowBox[{"n", "\[Equal]", "1.`"}], "||", 
+         RowBox[{"n", "\[Equal]", "8.`"}]}]},
+       {"0.75`", 
+        RowBox[{"n", "\[Equal]", "0.`"}]},
+       {"0.875`", 
+        RowBox[{"n", "\[Equal]", "6.`"}]},
+       {"0.9375`", 
+        RowBox[{
+         RowBox[{"n", "\[Equal]", "3.`"}], "||", 
+         RowBox[{"n", "\[Equal]", "7.`"}]}]},
+       {"1.0625`", 
+        RowBox[{"n", "\[Equal]", "5.`"}]},
+       {"1.4375`", 
+        RowBox[{"n", "\[Equal]", "4.`"}]},
+       {"0.`", 
+        TagBox["True",
+         "PiecewiseDefault",
+         AutoDelete->True]}
+      },
+      AllowedDimensions->{2, Automatic},
+      Editable->True,
+      GridBoxAlignment->{
+       "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+        "RowsIndexed" -> {}},
+      GridBoxItemSize->{
+       "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+        "RowsIndexed" -> {}},
+      GridBoxSpacings->{"Columns" -> {
+          Offset[0.27999999999999997`], {
+           Offset[0.84]}, 
+          Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+          Offset[0.2], {
+           Offset[0.4]}, 
+          Offset[0.2]}, "RowsIndexed" -> {}},
+      Selectable->True]}
+   },
+   GridBoxAlignment->{
+    "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+     "RowsIndexed" -> {}},
+   GridBoxItemSize->{
+    "Columns" -> {{Automatic}}, "ColumnsIndexed" -> {}, "Rows" -> {{1.}}, 
+     "RowsIndexed" -> {}},
+   GridBoxSpacings->{"Columns" -> {
+       Offset[0.27999999999999997`], {
+        Offset[0.35]}, 
+       Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+       Offset[0.2], {
+        Offset[0.4]}, 
+       Offset[0.2]}, "RowsIndexed" -> {}}],
+  "Piecewise",
+  DeleteWithContents->True,
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.7422375137886877`*^9, 3.745572459386985*^9, 
+  3.7456039769124384`*^9, 3.7456048611989417`*^9, 
+  3.745926530528417*^9},ExpressionUUID->"798c7807-69e2-490b-b679-\
+1b8bfee96c8b"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Discrete State-Space Model", "Subsection",
+ CellChangeTimes->{{3.741941710896346*^9, 
+  3.741941726211346*^9}},ExpressionUUID->"8f3104a6-0a6a-4eab-9296-\
+110e2eec2fa5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ss2", "=", 
+  RowBox[{"StateSpaceModel", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.1"}], ",", 
+          RowBox[{"-", "0.001"}], ",", "0.1", ",", "0.001"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0", ",", "1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.05", ",", "0.005", ",", 
+          RowBox[{"-", "0.5"}], ",", 
+          RowBox[{"-", "0.005"}]}], "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", 
+        RowBox[{"{", "0", "}"}], ",", 
+        RowBox[{"{", "0", "}"}], ",", 
+        RowBox[{"{", "1", "}"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "0", ",", "0", ",", "0"}], " ", "}"}], "}"}]}], 
+     "}"}], ",", " ", 
+    RowBox[{"SamplingPeriod", "\[Rule]", "0.1"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7299671534996853`*^9, 
+  3.729967155443979*^9}},ExpressionUUID->"05da5885-a7b2-4e57-ae01-\
+4ce2691e6fa1"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "0","1","0","0","0",RowBox[{"-", "0.1`"}],RowBox[{"-", "0.001`"}],"0.1`",
+   "0.001`","0","0","0","0","1","0","0.05`","0.005`",RowBox[{"-", "0.5`"}],
+   RowBox[{"-", "0.005`"}],"1","1","0","0","0","0","0.1`",{
+   StateSpaceModel, {
+    False, False, {
+     False, False}}, {$CellContext`stname1, $CellContext`stname2, \
+$CellContext`stname3, $CellContext`stname4}, {{Control`CommonDump`$DUMMY$}, {
+     Control`CommonDump`$DUMMY$}, {
+     Control`CommonDump`$DUMMY$, Control`CommonDump`$DUMMY$, 
+      Control`CommonDump`$DUMMY$, Control`CommonDump`$DUMMY$}}, Identity, 
+    Automatic, 1, 1, 4, 1, {}, {False, False}, False, Automatic, None, 
+    Automatic},{}},
+  "StateSpaceModelFull",
+  BaseStyle->{NumberMarks -> False},
+  DisplayFunction->(TagBox[
+    SubsuperscriptBox[
+     RowBox[{"(", 
+       GridBox[{{#, #2, #3, #4, #5}, {#6, #7, #8, #9, #10}, {#11, #12, #13, \
+#14, #15}, {#16, #17, #18, #19, #20}, {#21, #22, #23, #24, #25}}, 
+        AllowedDimensions -> {5, 5}, AutoDelete -> False, 
+        AllowScriptLevelChange -> False, ColumnAlignments -> {Center}, 
+        BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+        GridBoxDividers -> {"Rows" -> {False, False, False, False, 
+            Directive[
+             GrayLevel[0], 
+             GrayLevel[0.6]], {False}, False}, 
+          "Columns" -> {False, False, False, False, 
+            Directive[
+             GrayLevel[0], 
+             GrayLevel[0.6]], {False}, False}}, 
+        GridBoxBackground -> {"Rows" -> {{
+             GrayLevel[1], 
+             RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #26, 
+     ButtonBox[
+      GraphicsBox[{
+        RGBColor[0.8, 0.85, 0.85], 
+        EdgeForm[
+         RGBColor[0.6, 0.7, 0.7]], 
+        RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+        InsetBox[
+         StyleBox[
+         "\[ScriptCapitalS]", Control`NonlinearModelsDump`LineColor -> 
+          GrayLevel[0], Control`NonlinearModelsDump`FrontFaceColor -> 
+          GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+          GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 12, 
+          FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 20], 
+      ButtonFunction :> Control`Typesetting`SystemsModelTypesetToggle[
+        ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, Appearance -> 
+      None], MultilineFunction -> None], 
+    EventHandlerTag[{"MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+          FrontEnd`Value[
+           FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+      True}]]& ),
+  InterpretationFunction->(RowBox[{"StateSpaceModel", "[", 
+     RowBox[{"{", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{1, 4}, ","], "}"}], ",", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{6, 9}, ","], "}"}], ",", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{11, 14}, ","], "}"}], ",", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{16, 19}, ","], "}"}], "}"}], ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{5, 5}, ","], "}"}], ",", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{10, 10}, ","], "}"}], ",", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{15, 15}, ","], "}"}], ",", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{20, 20}, ","], "}"}], "}"}], ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{21, 24}, ","], "}"}], "}"}], ",", 
+       RowBox[{"{", 
+         RowBox[{"{", 
+           TemplateSlotSequence[{25, 25}, ","], "}"}], "}"}], "}"}], ",", 
+     "SamplingPeriod", "->", 
+     RowBox[{#26}], ",", "SystemsModelLabels", "->", "None", "]"}]& ),
+  Tooltip->StateSpaceModel]], "Output",
+ CellChangeTimes->{3.728709598100461*^9, 3.7287104677995863`*^9, 
+  3.728799301261123*^9, 3.728799397696766*^9, 3.7299648496901674`*^9, 
+  3.7299671575854034`*^9, 3.7299672516671314`*^9, 3.7455724611879845`*^9, 
+  3.745603985019456*^9, 3.745604868443487*^9, 
+  3.745926532272417*^9},ExpressionUUID->"1bacf893-f0a2-4955-b83a-\
+23bc9206f6a8"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["FIR-Filters", "Subchapter",
+ CellChangeTimes->{{3.741941174061346*^9, 
+  3.7419411785323462`*^9}},ExpressionUUID->"2b30e277-d5a1-4ec8-a722-\
+be5dc7f539a1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"t", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", 
+      RowBox[{"UnitBox", "[", 
+       RowBox[{"x", "/", 
+        RowBox[{"(", 
+         RowBox[{"0.9", " ", "\[Pi]"}], ")"}]}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"x", ",", "0", ",", "3", ",", 
+      RowBox[{"2", 
+       RowBox[{"\[Pi]", "/", "11"}]}]}], "}"}]}], "]"}]}]], "Input",Expression\
+UUID->"8cfcb47f-fed7-427d-89c2-baa538e7eb7b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"2", " ", "\[Pi]"}], "11"], ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"4", " ", "\[Pi]"}], "11"], ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"6", " ", "\[Pi]"}], "11"], ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"8", " ", "\[Pi]"}], "11"], ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"10", " ", "\[Pi]"}], "11"], ",", "0"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.676965832032731*^9, 3.6769663765806046`*^9, 
+  3.677238295318467*^9, 3.7455724612369843`*^9, 3.7456039852752953`*^9, 
+  3.7456048686553516`*^9, 
+  3.745926532319417*^9},ExpressionUUID->"0db3c7a7-1170-4b74-9267-\
+101e6347a9e5"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Plot", "[", 
+     RowBox[{
+      RowBox[{"UnitBox", "[", 
+       RowBox[{"x", "/", 
+        RowBox[{"(", 
+         RowBox[{"0.9", " ", "\[Pi]"}], ")"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "0", ",", "\[Pi]"}], "}"}], ",", 
+      RowBox[{"Exclusions", "\[Rule]", "None"}]}], "]"}], ",", 
+    RowBox[{"ListPlot", "[", 
+     RowBox[{"t", ",", 
+      RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Red", ",", 
+         RowBox[{"PointSize", "[", "Large", "]"}]}], "}"}]}], ",", 
+      RowBox[{"Filling", "\[Rule]", "0"}], ",", 
+      RowBox[{"FillingStyle", "\[Rule]", "Red"}]}], "]"}]}], "}"}], 
+  "]"}]], "Input",ExpressionUUID->"5c048cd5-762e-4a3f-ac3e-1034e7e0f975"],
+
+Cell[BoxData[
+ GraphicsBox[{{{{{}, {}, 
+      TagBox[{{
+         {RGBColor[0.368417, 0.506779, 0.709798], AbsoluteThickness[1.6], 
+          Opacity[1.], LineBox[CompressedData["
+1:eJxF0X0s1AEYB/CfuyvH1jq3i5mkO2XrtKVVShx109vdduN6k0r8UDp1OFaR
+plTHVHZnGCJRzttil7jy1iW3MJlFKi/JJbXynpA79LJ5nmf77rvPn989bDJM
+HEwhCCLob/419bl52+dtEe7E/xv3EJ+z7s5IyfVYsnLyREV6SjnYVScw50dq
+weExooCK8Cbw+afByRT7dnDntwNmhWQnOGnTNFF17D04wrEpTVvQC54LDC3r
+k34Ck3VHvBSn9eDAiU6tNnEQfNtJE6aSD4EpWs32GzHfwBZcYVt/xnfw/lz+
+g/GUYbDVWOveOM0oOOtVtQn17DjYzXb34tqgCbDjJ8bglahJ8KMiZkil7Cc4
+9uPJDkf5FO5z2yG8l/oL7Cyt72pkTuPeXE/yhwLtPsNL2ZyGviba3nAxE91Y
+4DRZl4Omz2/g0PKXTBDCQ/ZigQqdXLo6XlGCXuW7Ur+6Au2jpjMDNehsOoVf
+XIPmaKbytjWinVjdAaK36MjQDmXqB3RVQ+uL7j40L+I5+8wQWtD2cCBuBh2c
+GBagtp4BF/WHKGds0cPO5AseBy37cojdwkVf5e8c0Luis4y0AJYfuj08y/9i
+PpqrYBiiVOjr5fI0WQnaeVTWcv4xOidUuDWoAS05bTT11qNpJ/zKuZxZsMs+
+zkJfHrp5j0vRruzf4AJ1pou+dA7/Yb9R4ldsAL8xocdb1xrBlfRIVXvzPHjj
+KoaE1C2Ax5KnWVu6FsH2CQmbwiTEriXrfXu6+V/R+790/K6UmoAvyYJDLEfQ
+oqq7AssLFPCoURJLnUbnvbv2RBpJBc+F8PyjDWjbeeXxiBgaeGjfrRY6bRn4
+pUOrx5pbaAldRWObLQdr7q/jvVSi21zddGILU/Cs5O5B/2R0k1fu4RWWdDDp
+4lZYmIo+O/L6V286OjzvlCczEx1ndn0gNged/aHZRqxCd0UfVRg1aEG1LNq7
+B+0tpTXJ+9A+nHTL2n70maRnFQ6D6Bu+xKhhGF0/d4dULaB1ZXbqHsIM3Eqq
+FxlUdE9LZ/ZlU/Rsls07LwZ6UfRovZyJXk71iKphoVmhpIWDNdrGburUcRs0
+p+NmmcIWzU2wmtfZoTe7FgsNbPQfKkya3Q==
+           "]]}}},
+       Annotation[#, "Charting`Private`Tag$47764#1"]& ]}}, {}, {}}, {{}, 
+    GraphicsComplexBox[{{0., 1.}, {0.5711986642890533, 1.}, {
+     1.1423973285781066`, 1.}, {1.71359599286716, 0.}, {2.284794657156213, 
+     0.}, {2.8559933214452666`, 0.}, {0., 0.}, {0.5711986642890533, 0.}, {
+     1.1423973285781066`, 0.}, {0., 1.}, {0.5711986642890533, 1.}, {
+     1.1423973285781066`, 1.}, {1.71359599286716, 0.}, {2.284794657156213, 
+     0.}, {2.8559933214452666`, 0.}}, {{{}, {}, {}, {}, {{
+         {RGBColor[1, 0, 0], LineBox[{7, 1}], LineBox[{8, 2}], 
+          LineBox[{9, 3}]}}}}, {{}, {{
+         {RGBColor[1, 0, 0], PointSize[Large], AbsoluteThickness[1.6], 
+          PointBox[{10, 11, 12, 13, 14, 
+           15}]}}}, {}}}], {}, {}, {{}, {}}, {{}, {}}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, 
+     Charting`ScaledFrameTicks[{Identity, Identity}]}, {Automatic, 
+     Charting`ScaledFrameTicks[{Identity, Identity}]}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultMeshStyle" -> 
+    AbsolutePointSize[6], "ScalingFunctions" -> None, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->NCache[{{0, Pi}, {0., 1.}}, {{0, 3.141592653589793}, {0., 1.}}],
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.05], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.6769658346199903`*^9, 3.676966376770604*^9, 
+  3.677238295559467*^9, 3.7455724612889843`*^9, 3.745603985462181*^9, 
+  3.7456048689191947`*^9, 
+  3.745926532377417*^9},ExpressionUUID->"79eb4096-f4fc-471b-8bf3-\
+de22c890f083"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"frequencies", ",", "amplitudes"}], "}"}], "=", 
+   RowBox[{"Transpose", "[", "t", "]"}]}], ";"}], "\n", 
+ RowBox[{"FrequencySamplingFilterKernel", "[", 
+  RowBox[{"amplitudes", ",", "1"}], "]"}]}], "Input",ExpressionUUID->\
+"94e3620c-6169-4db2-9fd3-d1d67115a554"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.06941101076666979`", ",", 
+   RowBox[{"-", "0.054031922221558226`"}], ",", 
+   RowBox[{"-", "0.109419602161415`"}], ",", "0.04737350528301844`", ",", 
+   "0.3193942810605578`", ",", "0.4545454545454546`", ",", 
+   "0.3193942810605578`", ",", "0.04737350528301844`", ",", 
+   RowBox[{"-", "0.109419602161415`"}], ",", 
+   RowBox[{"-", "0.054031922221558226`"}], ",", "0.06941101076666979`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.6769658360931373`*^9, 3.6769663767836046`*^9, 
+  3.677238295573467*^9, 3.7455724613109846`*^9, 3.745603985504161*^9, 
+  3.7456048690870905`*^9, 
+  3.7459265324014173`*^9},ExpressionUUID->"b98b515d-0900-47c5-9168-\
+c2ad9562c8b1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"ListPlot", "[", 
+     RowBox[{"t", ",", 
+      RowBox[{"PlotRange", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "\[Pi]"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1.2"}], "}"}]}], "}"}]}], ",", 
+      RowBox[{"PlotStyle", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"Red", ",", 
+         RowBox[{"PointSize", "[", "Medium", "]"}]}], "}"}]}], ",", 
+      RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+      RowBox[{"AxesLabel", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{"\[Omega]", ",", "None"}], "}"}]}]}], "]"}], ",", 
+    RowBox[{"Plot", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"UnitBox", "[", 
+         RowBox[{"\[Omega]", "/", 
+          RowBox[{"(", 
+           RowBox[{"0.9", " ", "\[Pi]"}], ")"}]}], "]"}], ",", 
+        RowBox[{"Evaluate", "[", 
+         RowBox[{"Abs", "[", 
+          RowBox[{"ListFourierSequenceTransform", "[", 
+           RowBox[{
+            RowBox[{"FrequencySamplingFilterKernel", "[", 
+             RowBox[{"amplitudes", ",", "1"}], "]"}], ",", "\[Omega]"}], 
+           "]"}], "]"}], "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\[Omega]", ",", "0", ",", "\[Pi]"}], "}"}], ",", 
+      RowBox[{"PlotRange", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "\[Pi]"}], "}"}], ",", "All"}], "}"}]}]}], 
+     "]"}]}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.676965922435771*^9, 3.676965934947604*^9}, {
+  3.6769660253756046`*^9, 3.6769661720316043`*^9}, {3.676966209001604*^9, 
+  3.6769662371236043`*^9}, {3.676966330869604*^9, 3.6769663586016045`*^9}, {
+  3.677238321372467*^9, 
+  3.677238370401467*^9}},ExpressionUUID->"127f3b5c-604e-4a4f-b065-\
+1344252e2af0"],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, 
+    GraphicsComplexBox[{{0., 1.}, {0.5711986642890533, 1.}, {
+     1.1423973285781066`, 1.}, {1.71359599286716, 0.}, {2.284794657156213, 
+     0.}, {2.8559933214452666`, 0.}, {0., 0.}, {0.5711986642890533, 0.}, {
+     1.1423973285781066`, 0.}, {0., 1.}, {0.5711986642890533, 1.}, {
+     1.1423973285781066`, 1.}, {1.71359599286716, 0.}, {2.284794657156213, 
+     0.}, {2.8559933214452666`, 0.}}, {{{}, {}, {}, {}, {{
+         {RGBColor[1, 0, 0], Opacity[0.3], LineBox[{7, 1}], LineBox[{8, 2}], 
+          LineBox[{9, 3}]}}}}, {{}, {{
+         {RGBColor[1, 0, 0], PointSize[Medium], AbsoluteThickness[1.6], 
+          PointBox[{10, 11, 12, 13, 14, 
+           15}]}}}, {}}}], {}, {}, {{}, {}}, {{}, {}}}, {{{{}, {}, 
+      TagBox[{{
+         {RGBColor[0.368417, 0.506779, 0.709798], AbsoluteThickness[1.6], 
+          Opacity[1.], LineBox[CompressedData["
+1:eJxTTMoPSmViYGCQAWIQzbyf69xj00I7BjD4YB+UI3lrxqT59jD+xE8xm6dN
+Wg/nWx/14nIqPgDnF1T5JW4uOAHn5+5I7WNSvgDnX3nhybk86Qqc36X/jWFb
+5A04v1D7xNQDS+/A+b+Ss9fdzXsA5yftDQuYkPYIzk/+eOXAgY4ncH6Pwfb8
+ZW3P4HymA9vNW6pewPmCWt7n7s94Bed7zHda/GHSGzhf/P0Zt/rt7+D8Wcd3
+MTJnfoDzbWQd/yukfITztR8IPKkt+QTnr10hlLG16DOcX3Mv9rJ22xeE/2ws
+vOdN+Qrnm+Xtu3ZE6BvCv/Ndkl5PQPDtvttOMpyK4Df6mR8qn4ng65U4f66a
+heADAIDQlO4=
+           "]], LineBox[CompressedData["
+1:eJxF0V1IU3EABfCrW+76EE2ZC5km28qHIVRUwtKhSKFMGLqMRMOPW8t1R35M
+qSzB0tJIkg1MUCc1qemUlGU6SinUBjpMJEtxa8hG2ouuF/NrUyuo/zlwOPye
+j5gpU2tCKYrK+NO/67R2Lgx0baRQ/5KZI1UrLXBzX0ydoReOyjvkixmEc210
+5BU7bKJD06wjsMS+bj7zET4hcBWrvsKVujljyyI8PD495vLAiooP4pIVWDnz
+wlu7CWselRXbojeJe5a0xs1YeDWRGVNIYP1yjtgpg++lnfX6kuD2ILdYUADP
+lrcX3eqCZQZ+oMoC1w80PNX3wol+vfPGa7hTl3n66jjMXgvysn0w93LBgEyy
+RSxPl+x5zPDUeXlPqmmb+KWtTe7r28Ef0gS2wBog/hxC10WPBomH6ErL7NQu
+cUIUn2Uce8Q/mzcEp+b3iaWNjcfLWCr1v315blfaDzhjeW57qDSE+LZeoxWu
+warhDqXwZiixP8jWcDZg88L9N6WVHOIdraKoOgDH7hrzK+5wiVfSm5w09wDx
+RPx0ypEmmKUtXHF4GLH9+VHFhBGeSUp2qCN4xFtsx4WiZngy69nFg0KamJEn
+d3e3wNfXPv361gqXmwvPRbbBteH13ppO2LQ4JVJb4PnqS4agHVa+01dnu+Hs
+Uu5kgwfOlbQKR5fgksdvB+O/ww/yKH9gFX6/84Sx7MGO/jibmwonnmZs+3wO
+7HZ+Md3lwVvtooUsPryvenWsIRIO46RUjQhggY6JiI+GRXHrhfkiWDL3sN8Q
+C8saD+864uCTSdbMgBj+DTJCCOY=
+           "]]}}},
+       Annotation[#, "Charting`Private`Tag$47904#1"]& ], 
+      TagBox[{{
+         {RGBColor[0.880722, 0.611041, 0.142051], AbsoluteThickness[1.6], 
+          Opacity[1.], LineBox[CompressedData["
+1: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
+
+           "]]}}},
+       Annotation[#, 
+        "Charting`Private`Tag$47904#2"]& ], {}}, {{}, {}, {}, {}}}, {}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\[Omega]", TraditionalForm], None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->NCache[{{0, Pi}, {0, 1.2}}, {{0, 3.141592653589793}, {0, 1.2}}],
+  PlotRangeClipping->True,
+  PlotRangePadding->{{0, 0}, {0, 0}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.6769663594166045`*^9, 3.6769663768846045`*^9}, 
+   3.6772382956544666`*^9, {3.6772383269304667`*^9, 3.6772383338264666`*^9}, {
+   3.677238366011467*^9, 3.677238371060467*^9}, 3.7455724614259844`*^9, 
+   3.7456039857889833`*^9, 3.7456048694198833`*^9, 
+   3.7459265325094175`*^9},ExpressionUUID->"e081caff-2527-4c46-aced-\
+fc7c18c2c498"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Continuous-time \[LeftRightArrow] Discrete-time", "Subchapter",
+ CellChangeTimes->{{3.7422331361354733`*^9, 
+  3.74223315548567*^9}},ExpressionUUID->"13a4633d-9e78-4aee-88d0-\
+b74de97f01bc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"tfc", "=", 
+  RowBox[{"TransferFunctionModel", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"s", "+", "1"}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"s", "^", "2"}], "+", 
+       RowBox[{"1", " ", "s"}], "+", "1"}], ")"}]}], ",", "s"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7422332931357937`*^9, 
+  3.7422332969662576`*^9}},ExpressionUUID->"3b55a01e-936d-4723-a7ae-\
+79d1593757b4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  TemplateBox[{FractionBox[
+     RowBox[{"1", "+", "s"}], 
+     RowBox[{"1", "+", "s", "+", 
+       SuperscriptBox["s", "2"]}]],InterpretationBox[
+    "\[InvisibleSpace]", None],{
+    TransferFunctionModel, {
+     False, False, {False, False}}, $Failed, {{Control`CommonDump`$DUMMY$}, {
+      Control`CommonDump`$DUMMY$}}, InterpretationBox[#, 
+      TransferFunctionModel[{{{1 + $CellContext`s}}, 
+        1 + $CellContext`s + $CellContext`s^2}, $CellContext`s], AutoDelete -> 
+      True, Editable -> True, BaseStyle -> 
+      "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+     Control`CountStates[
+      TransferFunctionModel[{{{1 + $CellContext`s}}, 
+        1 + $CellContext`s + $CellContext`s^2}, $CellContext`s]], 1, {}, {
+     False, False}, False, Automatic, None, Automatic},{}},
+   "TransferFunctionModelFull",
+   BaseStyle->{NumberMarks -> False},
+   DisplayFunction->(TagBox[
+     SubsuperscriptBox[
+      RowBox[{"(", 
+        GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> False, 
+         AllowScriptLevelChange -> False, ColumnAlignments -> {Center}, 
+         BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+         GridBoxDividers -> {
+          "Rows" -> {False, {False}, False}, 
+           "Columns" -> {False, {False}, False}}, 
+         GridBoxBackground -> {"Rows" -> {{
+              GrayLevel[1], 
+              RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+      ButtonBox[
+       GraphicsBox[{
+         RGBColor[0.8, 0.85, 0.85], 
+         EdgeForm[
+          RGBColor[0.6, 0.7, 0.7]], 
+         RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+         InsetBox[
+          StyleBox[
+          "\[ScriptCapitalT]", Control`NonlinearModelsDump`LineColor -> 
+           GrayLevel[0], Control`NonlinearModelsDump`FrontFaceColor -> 
+           GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+           GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 12, 
+           FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 20], 
+       ButtonFunction :> Control`Typesetting`SystemsModelTypesetToggle[
+         ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, Appearance -> 
+       None], MultilineFunction -> None], 
+     EventHandlerTag[{"MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+           FrontEnd`Value[
+            FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+       True}]]& ),
+   InterpretationFunction->(
+    RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+      RowBox[{"{", 
+        RowBox[{"{", 
+          TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",", "s", ",",
+       "SamplingPeriod", "->", 
+      RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", "]"}]& ),
+   Tooltip->TransferFunctionModel],
+  TransferFunctionModel[{{{1 + $CellContext`s}}, 
+    1 + $CellContext`s + $CellContext`s^2}, $CellContext`s],
+  AutoDelete->True,
+  BaseStyle->"TransferFunctionModelMinimal",
+  Editable->True]], "Output",
+ CellChangeTimes->{3.7422333013073473`*^9, 3.7455724614949846`*^9, 
+  3.7456039860048532`*^9, 3.7456048696387453`*^9, 
+  3.7459265325774174`*^9},ExpressionUUID->"e69b1abd-eec2-43e4-b1b6-\
+f7d7ed05d5b2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"tfd", "=", 
+  RowBox[{"ToDiscreteTimeModel", "[", 
+   RowBox[{"tfc", ",", "0.1", ",", "z", ",", 
+    RowBox[{"Method", "\[Rule]", "\"\<ZeroOrderHold\>\""}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.742233312858711*^9, 
+  3.7422333245315676`*^9}},ExpressionUUID->"6472eb30-0b15-4003-b99f-\
+34538ccebbab"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,72,1,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461523985*^9, 3.7456039861467643`*^9, 
+  3.745604869788657*^9, 
+  3.745926532626417*^9},ExpressionUUID->"c52a40ce-d842-4da4-9d26-\
+9e2936d7e3ce"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,72,2,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461523985*^9, 3.7456039861467643`*^9, 
+  3.745604869788657*^9, 
+  3.745926532675417*^9},ExpressionUUID->"e857bd23-b1a8-4780-bd18-\
+1e7ae7aeddba"],
+
+Cell[BoxData[
+ RowBox[{"ToDiscreteTimeModel", "[", 
+  RowBox[{
+   InterpretationBox[
+    TemplateBox[{FractionBox[
+       RowBox[{"1", "+", "s"}], 
+       RowBox[{"1", "+", "s", "+", 
+         SuperscriptBox["s", "2"]}]],InterpretationBox[
+      "\[InvisibleSpace]", None],{
+      TransferFunctionModel, {
+       False, False, {False, False}}, $Failed, {{
+        Control`CommonDump`$DUMMY$}, {Control`CommonDump`$DUMMY$}}, 
+       InterpretationBox[#, 
+        TransferFunctionModel[{{{1 + $CellContext`s}}, 
+          1 + $CellContext`s + $CellContext`s^2}, $CellContext`s], AutoDelete -> 
+        True, Editable -> True, BaseStyle -> 
+        "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+       Control`CountStates[
+        TransferFunctionModel[{{{1 + $CellContext`s}}, 
+          1 + $CellContext`s + $CellContext`s^2}, $CellContext`s]], 1, {}, {
+       False, False}, False, Automatic, None, Automatic},{}},
+     "TransferFunctionModelFull",
+     BaseStyle->{NumberMarks -> False},
+     DisplayFunction->(TagBox[
+       SubsuperscriptBox[
+        RowBox[{"(", 
+          
+          GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> False, 
+           AllowScriptLevelChange -> False, ColumnAlignments -> {Center}, 
+           BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+           GridBoxDividers -> {
+            "Rows" -> {False, {False}, False}, 
+             "Columns" -> {False, {False}, False}}, 
+           GridBoxBackground -> {"Rows" -> {{
+                GrayLevel[1], 
+                RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+        ButtonBox[
+         GraphicsBox[{
+           RGBColor[0.8, 0.85, 0.85], 
+           EdgeForm[
+            RGBColor[0.6, 0.7, 0.7]], 
+           RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+           InsetBox[
+            StyleBox[
+            "\[ScriptCapitalT]", Control`NonlinearModelsDump`LineColor -> 
+             GrayLevel[0], Control`NonlinearModelsDump`FrontFaceColor -> 
+             GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+             GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 12, 
+             FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 20], 
+         ButtonFunction :> Control`Typesetting`SystemsModelTypesetToggle[
+           ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, Appearance -> 
+         None], MultilineFunction -> None], 
+       EventHandlerTag[{"MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+             FrontEnd`Value[
+              FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+         True}]]& ),
+     InterpretationFunction->(
+      RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+        RowBox[{"{", 
+          RowBox[{"{", 
+            TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",", "s", 
+        ",", "SamplingPeriod", "->", 
+        RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", "]"}]& ),
+     Tooltip->TransferFunctionModel],
+    TransferFunctionModel[{{{1 + $CellContext`s}}, 
+      1 + $CellContext`s + $CellContext`s^2}, $CellContext`s],
+    AutoDelete->True,
+    BaseStyle->"TransferFunctionModelMinimal",
+    Editable->True], ",", "0.1`", ",", "0", ",", 
+   RowBox[{"Method", "\[Rule]", "\<\"ZeroOrderHold\"\>"}]}], "]"}]], "Output",
+ CellChangeTimes->{3.742233326312419*^9, 3.7455724615949845`*^9, 
+  3.745603986393609*^9, 3.7456048699655485`*^9, 
+  3.7459265327614174`*^9},ExpressionUUID->"153c33a9-3603-4efb-834b-\
+ac39488982ef"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"gm", ",", "pm"}], "}"}], "=", 
+  RowBox[{"GainPhaseMargins", "[", "tfd", "]"}]}]], "Input",
+ CellChangeTimes->{{3.742233343930112*^9, 
+  3.742233348197273*^9}},ExpressionUUID->"3b0439a8-d8c9-4604-9c54-\
+0e6e5c836e82"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "GainPhaseMargins","invsys2",
+   "\"\\!\\(\\*RowBox[{\\\"Method\\\", \\\"\[Rule]\\\", \
+\\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]\\) is not a valid \\!\\(\\*RowBox[{\\\
+\"TransferFunctionModel\\\"}]\\), or \
+\\!\\(\\*RowBox[{\\\"StateSpaceModel\\\"}]\\).\"",2,73,3,17970730395363555043,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724616209846`*^9, 3.745603986639463*^9, 
+  3.7456048701894135`*^9, 
+  3.745926532885417*^9},ExpressionUUID->"cbf607fd-d63f-4de5-83b7-\
+e95eeab6e350"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Set","shape",
+   "\"Lists \\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"gm\\\", \\\",\\\", \\\"pm\
+\\\"}], \\\"}\\\"}]\\) and \\!\\(\\*RowBox[{\\\"GainPhaseMargins\\\", \\\"[\\\
+\", RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"1\\\", \
+\\\"+\\\", \\\"s\\\"]], RowBox[List[\\\"1\\\", \\\"+\\\", \\\"s\\\", \
+\\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1, s]]], Plus[1, s, Power[s, 2]]], \
+s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1, s]]], \
+Plus[1, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1, s]]], Plus[1, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\", \\\"\[Rule]\\\", \
+\\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}], \\\"]\\\"}]\\) are \
+not the same shape.\"",2,73,4,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724616209846`*^9, 3.745603986639463*^9, 
+  3.7456048701894135`*^9, 
+  3.745926532987417*^9},ExpressionUUID->"8f338aed-d0f6-4339-87e6-\
+f594a74225ff"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "GainPhaseMargins","invsys2",
+   "\"\\!\\(\\*RowBox[{\\\"Method\\\", \\\"\[Rule]\\\", \
+\\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]\\) is not a valid \\!\\(\\*RowBox[{\\\
+\"TransferFunctionModel\\\"}]\\), or \
+\\!\\(\\*RowBox[{\\\"StateSpaceModel\\\"}]\\).\"",2,73,5,17970730395363555043,
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724616209846`*^9, 3.745603986639463*^9, 
+  3.7456048701894135`*^9, 
+  3.745926533036417*^9},ExpressionUUID->"e3472749-9f2d-417b-8cb8-\
+babaa77848d4"],
+
+Cell[BoxData[
+ RowBox[{"GainPhaseMargins", "[", 
+  RowBox[{"ToDiscreteTimeModel", "[", 
+   RowBox[{
+    InterpretationBox[
+     TemplateBox[{FractionBox[
+        RowBox[{"1", "+", "s"}], 
+        RowBox[{"1", "+", "s", "+", 
+          SuperscriptBox["s", "2"]}]],InterpretationBox[
+       "\[InvisibleSpace]", None],{
+       TransferFunctionModel, {
+        False, False, {False, False}}, $Failed, {{
+         Control`CommonDump`$DUMMY$}, {Control`CommonDump`$DUMMY$}}, 
+        InterpretationBox[#, 
+         TransferFunctionModel[{{{1 + $CellContext`s}}, 
+           1 + $CellContext`s + $CellContext`s^2}, $CellContext`s], 
+         AutoDelete -> True, Editable -> True, BaseStyle -> 
+         "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+        Control`CountStates[
+         TransferFunctionModel[{{{1 + $CellContext`s}}, 
+           1 + $CellContext`s + $CellContext`s^2}, $CellContext`s]], 1, {}, {
+        False, False}, False, Automatic, None, Automatic},{}},
+      "TransferFunctionModelFull",
+      BaseStyle->{NumberMarks -> False},
+      DisplayFunction->(TagBox[
+        SubsuperscriptBox[
+         RowBox[{"(", 
+           
+           GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> False, 
+            AllowScriptLevelChange -> False, ColumnAlignments -> {Center}, 
+            BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+            GridBoxDividers -> {
+             "Rows" -> {False, {False}, False}, 
+              "Columns" -> {False, {False}, False}}, 
+            GridBoxBackground -> {"Rows" -> {{
+                 GrayLevel[1], 
+                 RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+         ButtonBox[
+          GraphicsBox[{
+            RGBColor[0.8, 0.85, 0.85], 
+            EdgeForm[
+             RGBColor[0.6, 0.7, 0.7]], 
+            RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+            InsetBox[
+             StyleBox[
+             "\[ScriptCapitalT]", Control`NonlinearModelsDump`LineColor -> 
+              GrayLevel[0], Control`NonlinearModelsDump`FrontFaceColor -> 
+              GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+              GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 12, 
+              FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 20], 
+          ButtonFunction :> Control`Typesetting`SystemsModelTypesetToggle[
+            ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, Appearance -> 
+          None], MultilineFunction -> None], 
+        EventHandlerTag[{"MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+              FrontEnd`Value[
+               FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+          True}]]& ),
+      InterpretationFunction->(
+       RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+         RowBox[{"{", 
+           RowBox[{"{", 
+             TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",", "s", 
+         ",", "SamplingPeriod", "->", 
+         RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", "]"}]& ),
+      Tooltip->TransferFunctionModel],
+     TransferFunctionModel[{{{1 + $CellContext`s}}, 
+       1 + $CellContext`s + $CellContext`s^2}, $CellContext`s],
+     AutoDelete->True,
+     BaseStyle->"TransferFunctionModelMinimal",
+     Editable->True], ",", "0.1`", ",", "0", ",", 
+    RowBox[{"Method", "\[Rule]", "\<\"ZeroOrderHold\"\>"}]}], "]"}], 
+  "]"}]], "Output",
+ CellChangeTimes->{3.742233349742796*^9, 3.7455724617789845`*^9, 
+  3.745603987144147*^9, 3.7456048706211433`*^9, 
+  3.7459265331364174`*^9},ExpressionUUID->"fa1487ef-4259-4371-91aa-\
+f9d52b7f8912"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"max", "=", "100"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"yn", "=", 
+   RowBox[{"OutputResponse", "[", 
+    RowBox[{"tfd", ",", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"UnitStep", "[", "n", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", "0", ",", "max"}], "}"}]}], "]"}]}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{"ListPlot", "[", 
+  RowBox[{"yn", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "max"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1.4"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+   RowBox[{"FrameLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\"\<y[n]\>\"", ",", "None"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<n\>\"", ",", "\"\<unit step response\>\""}], "}"}]}], 
+     "}"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "400"}], ",", 
+   RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+   RowBox[{"BaseStyle", "\[Rule]", "14"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.742233370293375*^9, 
+  3.742233389909542*^9}},ExpressionUUID->"d048b757-4a9a-4283-b465-\
+4e8f9ccd3d40"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"1\\\", \
+\\\"+\\\", \\\"s\\\"]], RowBox[List[\\\"1\\\", \\\"+\\\", \\\"s\\\", \
+\\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1, s]]], Plus[1, s, Power[s, 2]]], \
+s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1, s]]], \
+Plus[1, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1, s]]], Plus[1, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\", \\\"\[Rule]\\\", \
+\\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\\) is not a valid \
+TransferFunctionModel, StateSpaceModel, AffineStateSpaceModel, or \
+NonlinearStateSpaceModel.\"",2,75,6,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533227417*^9},ExpressionUUID->"7af8dbfb-a10a-458f-b524-\
+18000c6f6675"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"1\\\", \
+\\\"+\\\", \\\"s\\\"]], RowBox[List[\\\"1\\\", \\\"+\\\", \\\"s\\\", \
+\\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1, s]]], Plus[1, s, Power[s, 2]]], \
+s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1, s]]], \
+Plus[1, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1, s]]], Plus[1, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\", \\\"\[Rule]\\\", \
+\\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\\) is not a valid \
+TransferFunctionModel, StateSpaceModel, AffineStateSpaceModel, or \
+NonlinearStateSpaceModel.\"",2,75,7,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533324417*^9},ExpressionUUID->"be9fc41c-f082-491c-8bd2-\
+11fdd8f96fa7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,76,8,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533399417*^9},ExpressionUUID->"41f268f2-a9f5-4e13-9019-\
+78264aea95c0"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"1.`16.\
+\\\", \\\"+\\\", \\\"s\\\"]], RowBox[List[\\\"1.`16.\\\", \\\"+\\\", \
+\\\"s\\\", \\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1.`16., s]]], Plus[1.`16., s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1.`16., s]]], \
+Plus[1.`16., s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1.`16., s]]], \
+Plus[1.`16., s, Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, \
+True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \
+\\\"0.1`\\\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\", \\\"\
+\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\\) is not \
+a valid TransferFunctionModel, StateSpaceModel, AffineStateSpaceModel, or \
+NonlinearStateSpaceModel.\"",2,76,9,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.7459265334834175`*^9},ExpressionUUID->"20bd92c6-00dd-4e4e-938e-\
+bb432e085613"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0.`\\\"}]\\) is not a valid variable.\"",2,76,10,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533515417*^9},ExpressionUUID->"8610437d-5d9d-492c-9afd-\
+b8ad5a7012fd"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[RowBox[\
+List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \\\"+\\\", \\\"s\\\"]], \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\", \\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, Power[s, \
+2]]], s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1.`, s]]], \
+Plus[1.`, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\\\", \
+\\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\\) is \
+not a valid TransferFunctionModel, StateSpaceModel, AffineStateSpaceModel, or \
+NonlinearStateSpaceModel.\"",2,76,11,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533606417*^9},ExpressionUUID->"0e4df557-6ffa-41fa-b3c7-\
+dea6f32517a8"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ListPlot","lpn",
+   "\"\\!\\(\\*RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[RowBox[\
+List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \\\"+\\\", \\\"s\\\"]], \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\", \\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, Power[s, \
+2]]], s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1.`, s]]], \
+Plus[1.`, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\\\", \
+\\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\
+\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\
+\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+RowBox[{\\\"\[LeftSkeleton]\\\", \\\"51\\\", \\\"\[RightSkeleton]\\\"}]}], \\\
+\"}\\\"}]}], \\\"]\\\"}]\\) is not a list of numbers or pairs of numbers.\"",
+   2,76,12,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.7459265337094173`*^9},ExpressionUUID->"5962d302-6de4-46de-883a-\
+d8ea065cacb7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,76,13,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.7459265337894173`*^9},ExpressionUUID->"2940df51-22dc-4142-85c9-\
+870c13694b16"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \
+\\!\\(\\*StyleBox[RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"::\\\", \\\"ivar\\\
+\"}], \\\"MessageName\\\"]\\) will be suppressed during this calculation.\"",
+   2,76,14,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533811417*^9},ExpressionUUID->"02de3052-8181-4999-9423-\
+d7688f92be21"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"1.`16.\
+\\\", \\\"+\\\", \\\"s\\\"]], RowBox[List[\\\"1.`16.\\\", \\\"+\\\", \
+\\\"s\\\", \\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1.`16., s]]], Plus[1.`16., s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1.`16., s]]], \
+Plus[1.`16., s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1.`16., s]]], \
+Plus[1.`16., s, Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, \
+True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \
+\\\"0.1`\\\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\", \\\"\
+\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\\) is not \
+a valid TransferFunctionModel, StateSpaceModel, AffineStateSpaceModel, or \
+NonlinearStateSpaceModel.\"",2,76,15,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.7459265338984175`*^9},ExpressionUUID->"17d222e7-c4c5-4553-b1f6-\
+8a37cee15a38"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"OutputResponse\\\", \
+\\\"::\\\", \\\"invsys\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"",2,76,16,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926533925417*^9},ExpressionUUID->"6cb24394-6a19-4cc8-a8cc-\
+3f122304a343"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ListPlot","lpn",
+   "\"\\!\\(\\*RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[RowBox[\
+List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \\\"+\\\", \\\"s\\\"]], \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\", \\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, Power[s, \
+2]]], s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1.`, s]]], \
+Plus[1.`, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\\\", \
+\\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\
+\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\
+\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+RowBox[{\\\"\[LeftSkeleton]\\\", \\\"51\\\", \\\"\[RightSkeleton]\\\"}]}], \\\
+\"}\\\"}]}], \\\"]\\\"}]\\) is not a list of numbers or pairs of numbers.\"",
+   2,76,17,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926534021417*^9},ExpressionUUID->"f0203542-4559-4f67-95c5-\
+663cf1949480"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ListPlot","lpn",
+   "\"\\!\\(\\*RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[RowBox[\
+List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \\\"+\\\", \\\"s\\\"]], \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\", \\\"+\\\", SuperscriptBox[\\\"s\\\", \\\"2\\\"]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, Power[s, \
+2]]], s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Plus[1.`, s]]], \
+Plus[1.`, s, Power[s, 2]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Plus[1.`, s]]], Plus[1.`, s, \
+Power[s, 2]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \\\"0.1`\\\
+\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\\\", \
+\\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}], \
+\\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\
+\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\
+\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"1.`\\\", \\\",\\\", \
+RowBox[{\\\"\[LeftSkeleton]\\\", \\\"51\\\", \\\"\[RightSkeleton]\\\"}]}], \\\
+\"}\\\"}]}], \\\"]\\\"}]\\) is not a list of numbers or pairs of numbers.\"",
+   2,76,18,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.745926534153417*^9},ExpressionUUID->"32da9c30-0e0d-473a-9356-\
+a0a36d35a20d"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"ListPlot\\\", \
+\\\"::\\\", \\\"lpn\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"",2,76,19,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.745572461957985*^9, 3.745603987434968*^9, 
+  3.745604870917966*^9, 
+  3.7459265341814175`*^9},ExpressionUUID->"9958814b-2da3-43da-9890-\
+73f708cf656c"],
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{
+   RowBox[{"OutputResponse", "[", 
+    RowBox[{
+     RowBox[{"ToDiscreteTimeModel", "[", 
+      RowBox[{
+       InterpretationBox[
+        TemplateBox[{FractionBox[
+           RowBox[{"1", "+", "s"}], 
+           RowBox[{"1", "+", "s", "+", 
+             SuperscriptBox["s", "2"]}]],InterpretationBox[
+          "\[InvisibleSpace]", None],{
+          TransferFunctionModel, {
+           False, False, {False, False}}, $Failed, {{
+            Control`CommonDump`$DUMMY$}, {Control`CommonDump`$DUMMY$}}, 
+           InterpretationBox[#, 
+            
+            TransferFunctionModel[{{{1 + $CellContext`s}}, 
+              1 + $CellContext`s + $CellContext`s^2}, $CellContext`s], 
+            AutoDelete -> True, Editable -> True, BaseStyle -> 
+            "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+           Control`CountStates[
+            
+            TransferFunctionModel[{{{1 + $CellContext`s}}, 
+              1 + $CellContext`s + $CellContext`s^2}, $CellContext`s]], 
+           1, {}, {False, False}, False, Automatic, None, Automatic},{}},
+         "TransferFunctionModelFull",
+         BaseStyle->{NumberMarks -> False},
+         DisplayFunction->(TagBox[
+           SubsuperscriptBox[
+            RowBox[{"(", 
+              
+              GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> False,
+                AllowScriptLevelChange -> False, ColumnAlignments -> {Center},
+                BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+               GridBoxDividers -> {
+                "Rows" -> {False, {False}, False}, 
+                 "Columns" -> {False, {False}, False}}, 
+               GridBoxBackground -> {"Rows" -> {{
+                    GrayLevel[1], 
+                    RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+            ButtonBox[
+             GraphicsBox[{
+               RGBColor[0.8, 0.85, 0.85], 
+               EdgeForm[
+                RGBColor[0.6, 0.7, 0.7]], 
+               RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+               InsetBox[
+                StyleBox[
+                "\[ScriptCapitalT]", Control`NonlinearModelsDump`LineColor -> 
+                 GrayLevel[0], Control`NonlinearModelsDump`FrontFaceColor -> 
+                 GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+                 GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 12, 
+                 FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 20], 
+             ButtonFunction :> Control`Typesetting`SystemsModelTypesetToggle[
+               ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, 
+             Appearance -> None], MultilineFunction -> None], 
+           
+           EventHandlerTag[{
+            "MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+                 FrontEnd`Value[
+                  FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+             True}]]& ),
+         InterpretationFunction->(
+          RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+            RowBox[{"{", 
+              RowBox[{"{", 
+                TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",", 
+            "s", ",", "SamplingPeriod", "->", 
+            RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", "]"}]& ),
+         Tooltip->TransferFunctionModel],
+        TransferFunctionModel[{{{1 + $CellContext`s}}, 
+          1 + $CellContext`s + $CellContext`s^2}, $CellContext`s],
+        AutoDelete->True,
+        BaseStyle->"TransferFunctionModelMinimal",
+        Editable->True], ",", "0.1`", ",", "0", ",", 
+       RowBox[{"Method", "\[Rule]", "\<\"ZeroOrderHold\"\>"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1"}], "}"}]}], "]"}], ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "100"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1.4`"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+   RowBox[{"FrameLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\<\"y[n]\"\>", ",", "None"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\<\"n\"\>", ",", "\<\"unit step response\"\>"}], "}"}]}], 
+     "}"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "400"}], ",", 
+   RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+   RowBox[{"BaseStyle", "\[Rule]", "14"}]}], "]"}]], "Output",
+ CellChangeTimes->{3.742233403580674*^9, 3.7455724628299847`*^9, 
+  3.7456039901203175`*^9, 3.7456048738171835`*^9, 
+  3.745926534357417*^9},ExpressionUUID->"f8913d16-f174-497e-ae7e-\
+2c56d88aacf6"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["z",
+  FontSlant->"Italic"],
+ "-Transform"
+}], "Subchapter",
+ CellChangeTimes->{{3.741941157487346*^9, 
+  3.741941159721346*^9}},ExpressionUUID->"86bc31db-21ba-4e66-bc06-\
+29c79568a6f5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ZTransform", "[", 
+  RowBox[{
+   RowBox[{"UnitStep", "[", "n", "]"}], ",", "n", ",", "z"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7422356987857466`*^9, 
+  3.742235698790737*^9}},ExpressionUUID->"3ccea632-22ad-44e2-bd4a-\
+f9cd1553bfda"],
+
+Cell[BoxData[
+ RowBox[{"ZTransform", "[", 
+  RowBox[{"1", ",", "12", ",", "0"}], "]"}]], "Output",
+ CellChangeTimes->{3.7422357000428843`*^9, 3.7455724629179845`*^9, 
+  3.745603990348177*^9, 3.7456048740290527`*^9, 
+  3.7459265344534173`*^9},ExpressionUUID->"ec35c0f2-1f90-4400-9fcd-\
+f74fb905b496"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Inverse ",
+ StyleBox["z",
+  FontSlant->"Italic"],
+ "-Transform"
+}], "Subsection",
+ CellChangeTimes->{{3.742235622919201*^9, 
+  3.742235629012938*^9}},ExpressionUUID->"1aba2176-a37d-4912-8656-\
+b2ab8000ec7f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"x", "[", "n_", "]"}], ":=", 
+  RowBox[{"InverseZTransform", "[", 
+   RowBox[{
+    RowBox[{"z", "/", 
+     RowBox[{"(", 
+      RowBox[{"z", "-", "1"}], ")"}]}], ",", "z", ",", "n"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.7422356185796757`*^9, 
+  3.7422356376109943`*^9}},ExpressionUUID->"386de37c-9bcb-4c08-ba1b-\
+bc9f8b294127"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "SetDelayed","write",
+   "\"Tag \\!\\(\\*RowBox[{\\\"Integer\\\"}]\\) in \
+\\!\\(\\*RowBox[{\\\"0\\\", \\\"[\\\", \\\"n_\\\", \\\"]\\\"}]\\) is \
+Protected.\"",2,78,20,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724629329844`*^9, 3.745603990494088*^9, 
+  3.7456048741779566`*^9, 
+  3.745926534475417*^9},ExpressionUUID->"a7ec3526-4bdb-4f32-bf04-\
+d235136e943f"],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.7455724629349847`*^9, 3.7456039905000834`*^9, 
+  3.745604874185956*^9, 
+  3.745926534503417*^9},ExpressionUUID->"a4160066-57b1-491a-82b5-\
+63f583e53862"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", 
+  RowBox[{
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", 
+       RowBox[{"x", "[", "n", "]"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "10"}], "}"}]}], "]"}], ",", 
+   RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+   RowBox[{"FrameLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\"\<x[n]\>\"", ",", "None"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<n\>\"", ",", "\"\<Inverse Ztransform of z/(z-1)\>\""}], 
+       "}"}]}], "}"}]}], ",", 
+   RowBox[{"FormatType", "\[Rule]", "StandardForm"}], ",", 
+   RowBox[{"RotateLabel", "\[Rule]", "False"}], ",", 
+   RowBox[{"Filling", "\[Rule]", "Axis"}], ",", 
+   RowBox[{"FillingStyle", "\[Rule]", "Red"}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"Automatic", ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1.3"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"PlotMarkers", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"Automatic", ",", "12"}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7422356185796757`*^9, 
+  3.7422356376109943`*^9}},ExpressionUUID->"847bca78-c2e6-4042-96d0-\
+edbf7213dcff"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, {}, {}, {{}, {}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  FormatType:>StandardForm,
+  Frame->{{True, True}, {True, True}},
+  FrameLabel->{{
+     FormBox["\"x[n]\"", StandardForm], None}, {
+     FormBox["\"n\"", StandardForm], 
+     FormBox["\"Inverse Ztransform of z/(z-1)\"", StandardForm]}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImagePadding->All,
+  Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        (Identity[#]& )[
+         Part[#, 1]], 
+        (Identity[#]& )[
+         Part[#, 2]]}& )}},
+  PlotRange->{{0, 1}, {0, 1}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {0, 0}},
+  RotateLabel->False,
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.7422356460100446`*^9, 3.7455724629829845`*^9, 
+  3.745603990615019*^9, 3.7456048744008207`*^9, 
+  3.745926534546417*^9},ExpressionUUID->"743a72c0-4396-43d8-b0e6-\
+96646d623f7c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Expanded example", "Subsection",
+ CellChangeTimes->{{3.7422358295246763`*^9, 
+  3.7422358333991437`*^9}},ExpressionUUID->"8044370b-0ae3-465f-b6a5-\
+92135e740fdf"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nSamples", "=", "14"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"f", "=", "1.0"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"sampleTime", "=", 
+   RowBox[{"1", "/", "f"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"u", "[", "t_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Sin", "[", 
+    RowBox[{"2", "*", "Pi", "*", 
+     RowBox[{"(", 
+      RowBox[{"f", "/", "3"}], ")"}], "*", "t"}], "]"}], "*", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", "0.3"}], "*", "t"}], "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ud", "[", "n_", "]"}], ":=", 
+   RowBox[{"u", "[", 
+    RowBox[{"n", "*", "sampleTime"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"plant", "=", 
+   RowBox[{"TransferFunctionModel", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"3", " ", "s"}], ")"}], "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"s", "+", "1"}], ")"}], 
+        RowBox[{"(", 
+         RowBox[{"s", "+", "2"}], ")"}]}], ")"}]}], ",", "s"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{"sysd", "=", 
+  RowBox[{"ToDiscreteTimeModel", "[", 
+   RowBox[{"plant", ",", "sampleTime", ",", "z", ",", 
+    RowBox[{"Method", "\[Rule]", "\"\<ZeroOrderHold\>\""}]}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7422358351021748`*^9, 
+  3.7422358351071653`*^9}},ExpressionUUID->"81a065cb-8793-4082-b798-\
+fe20eb89103f"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,86,21,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724630009847`*^9, 3.745603990672983*^9, 
+  3.745604874447789*^9, 
+  3.7459265345724173`*^9},ExpressionUUID->"3ac700ae-f929-42b7-9b9f-\
+f31c73e2d89b"],
+
+Cell[BoxData[
+ RowBox[{"ToDiscreteTimeModel", "[", 
+  RowBox[{
+   InterpretationBox[
+    TemplateBox[{FractionBox[
+       RowBox[{"3", " ", "s"}], 
+       RowBox[{
+         RowBox[{"(", 
+           RowBox[{"1", "+", "s"}], ")"}], " ", 
+         RowBox[{"(", 
+           RowBox[{"2", "+", "s"}], ")"}]}]],InterpretationBox[
+      "\[InvisibleSpace]", None],{
+      TransferFunctionModel, {
+       False, False, {False, False}}, $Failed, {{
+        Control`CommonDump`$DUMMY$}, {Control`CommonDump`$DUMMY$}}, 
+       InterpretationBox[#, 
+        TransferFunctionModel[{{{3 $CellContext`s}}, (1 + $CellContext`s) (
+           2 + $CellContext`s)}, $CellContext`s], AutoDelete -> True, 
+        Editable -> True, BaseStyle -> 
+        "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+       Control`CountStates[
+        TransferFunctionModel[{{{3 $CellContext`s}}, (1 + $CellContext`s) (
+           2 + $CellContext`s)}, $CellContext`s]], 1, {}, {False, False}, 
+       False, Automatic, None, Automatic},{}},
+     "TransferFunctionModelFull",
+     BaseStyle->{NumberMarks -> False},
+     DisplayFunction->(TagBox[
+       SubsuperscriptBox[
+        RowBox[{"(", 
+          
+          GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> False, 
+           AllowScriptLevelChange -> False, ColumnAlignments -> {Center}, 
+           BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+           GridBoxDividers -> {
+            "Rows" -> {False, {False}, False}, 
+             "Columns" -> {False, {False}, False}}, 
+           GridBoxBackground -> {"Rows" -> {{
+                GrayLevel[1], 
+                RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+        ButtonBox[
+         GraphicsBox[{
+           RGBColor[0.8, 0.85, 0.85], 
+           EdgeForm[
+            RGBColor[0.6, 0.7, 0.7]], 
+           RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+           InsetBox[
+            StyleBox[
+            "\[ScriptCapitalT]", Control`NonlinearModelsDump`LineColor -> 
+             GrayLevel[0], Control`NonlinearModelsDump`FrontFaceColor -> 
+             GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+             GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 12, 
+             FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 20], 
+         ButtonFunction :> Control`Typesetting`SystemsModelTypesetToggle[
+           ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, Appearance -> 
+         None], MultilineFunction -> None], 
+       EventHandlerTag[{"MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+             FrontEnd`Value[
+              FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+         True}]]& ),
+     InterpretationFunction->(
+      RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+        RowBox[{"{", 
+          RowBox[{"{", 
+            TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",", "s", 
+        ",", "SamplingPeriod", "->", 
+        RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", "]"}]& ),
+     Tooltip->TransferFunctionModel],
+    TransferFunctionModel[{{{3 $CellContext`s}}, (1 + $CellContext`s) (
+       2 + $CellContext`s)}, $CellContext`s],
+    AutoDelete->True,
+    BaseStyle->"TransferFunctionModelMinimal",
+    Editable->True], ",", "1.`", ",", "0", ",", 
+   RowBox[{"Method", "\[Rule]", "\<\"ZeroOrderHold\"\>"}]}], "]"}]], "Output",
+ CellChangeTimes->{3.7422358781148005`*^9, 3.745572463070985*^9, 
+  3.745603990847876*^9, 3.745604874619684*^9, 
+  3.745926534642417*^9},ExpressionUUID->"1cf82c47-5c89-4af8-a136-\
+f87adcc74e28"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"opts", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+     RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+     RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", "200"}], ",", 
+     RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "nSamples"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.5"}], ",", "0.5"}], "}"}]}], "}"}]}], ",", 
+     RowBox[{"GridLines", "\[Rule]", "Automatic"}], ",", 
+     RowBox[{"GridLinesStyle", "\[Rule]", "Dashed"}]}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"inputPlot", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"ud", "[", "k", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"k", ",", "0", ",", "nSamples"}], "}"}]}], "]"}], ",", 
+     RowBox[{"Evaluate", "[", "opts", "]"}], ",", 
+     RowBox[{"FrameLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\"\<u(t)\>\"", ",", "None"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<n\>\"", ",", "\"\<plant input u(nT)\>\""}], "}"}]}], 
+       "}"}]}], ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Thick", ",", "Red"}], "}"}]}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"plantPlot", "=", 
+   RowBox[{"ListPlot", "[", 
+    RowBox[{
+     RowBox[{"OutputResponse", "[", 
+      RowBox[{"sysd", ",", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"ud", "[", "k", "]"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"k", ",", "0", ",", "nSamples"}], "}"}]}], "]"}]}], "]"}], 
+     ",", 
+     RowBox[{"Evaluate", "[", "opts", "]"}], ",", 
+     RowBox[{"FrameLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\"\<y(t)\>\"", ",", "None"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<n\>\"", ",", "\"\<plant output y(nT)\>\""}], "}"}]}], 
+       "}"}]}], ",", 
+     RowBox[{"PlotStyle", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Thick", ",", "Blue"}], "}"}]}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{"Grid", "[", 
+  RowBox[{"{", 
+   RowBox[{"{", 
+    RowBox[{"inputPlot", ",", "plantPlot"}], "}"}], "}"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.7422358489410334`*^9, 
+  3.7422358609107375`*^9}},ExpressionUUID->"44204012-9d43-4dd9-b0f5-\
+d84eb05f5bd1"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"3\\\", \
+\\\" \\\", \\\"s\\\"]], RowBox[List[RowBox[List[\\\"(\\\", \
+RowBox[List[\\\"1\\\", \\\"+\\\", \\\"s\\\"]], \\\")\\\"]], \\\" \\\", \
+RowBox[List[\\\"(\\\", RowBox[List[\\\"2\\\", \\\"+\\\", \\\"s\\\"]], \\\")\\\
+\"]]]]], InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Times[3, s]]], Times[Plus[1, s], Plus[2, \
+s]]], s], Rule[AutoDelete, True], Rule[Editable, True], Rule[BaseStyle, \
+\\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Times[3, s]]], \
+Times[Plus[1, s], Plus[2, s]]], s]], 1, List[], List[False, False], False, \
+Automatic, None, Automatic], List[]], \\\"TransferFunctionModelFull\\\", \
+Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Times[3, s]]], Times[Plus[1, \
+s], Plus[2, s]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \\\",\\\", \
+\\\"1.`\\\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\", \\\"\
+\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\\) is not \
+a valid TransferFunctionModel, StateSpaceModel, AffineStateSpaceModel, or \
+NonlinearStateSpaceModel.\"",2,89,22,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926534737417*^9},ExpressionUUID->"46479e59-710a-4f27-aa3d-\
+41f7ca337f91"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,89,23,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926534811417*^9},ExpressionUUID->"8f885b03-0cf4-4e00-a707-\
+7777d8a51ea7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"3.`16.\
+\\\", \\\" \\\", \\\"s\\\"]], RowBox[List[RowBox[List[\\\"(\\\", RowBox[List[\
+\\\"1.`16.\\\", \\\"+\\\", \\\"s\\\"]], \\\")\\\"]], \\\" \\\", \
+RowBox[List[\\\"(\\\", RowBox[List[\\\"2.`16.\\\", \\\"+\\\", \\\"s\\\"]], \\\
+\")\\\"]]]]], InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Times[3.`16., s]]], Times[Plus[1.`16., \
+s], Plus[2.`16., s]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Times[3.`16., s]]], \
+Times[Plus[1.`16., s], Plus[2.`16., s]]], s]], 1, List[], List[False, False], \
+False, Automatic, None, Automatic], List[]], \
+\\\"TransferFunctionModelFull\\\", Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Times[3.`16., s]]], \
+Times[Plus[1.`16., s], Plus[2.`16., s]]], s], Rule[AutoDelete, True], \
+Rule[Editable, True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \
+\\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"0\\\", \\\",\\\", RowBox[{\\\"Method\\\
+\", \\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \
+\\\"]\\\"}]\\) is not a valid TransferFunctionModel, StateSpaceModel, \
+AffineStateSpaceModel, or NonlinearStateSpaceModel.\"",2,89,24,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.7459265348984175`*^9},ExpressionUUID->"6c9b5ddf-1220-4de3-9c17-\
+694db1b55c5c"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0.`\\\"}]\\) is not a valid variable.\"",2,89,25,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.7459265349264174`*^9},ExpressionUUID->"dc3c585d-52ff-4f54-a453-\
+28cc58209820"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "OutputResponse","invsys",
+   "\"\\!\\(\\*RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"3.`\\\"\
+, \\\" \\\", \\\"s\\\"]], RowBox[List[RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]], \\\" \\\", RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"2.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Times[3.`, s]]], Times[Plus[1.`, s], \
+Plus[2.`, s]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s]], 1, List[], List[False, False], \
+False, Automatic, None, Automatic], List[]], \
+\\\"TransferFunctionModelFull\\\", Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s], Rule[AutoDelete, True], \
+Rule[Editable, True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \
+\\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\
+\\\", \\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}]\
+\\) is not a valid TransferFunctionModel, StateSpaceModel, \
+AffineStateSpaceModel, or NonlinearStateSpaceModel.\"",2,89,26,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926535005417*^9},ExpressionUUID->"e6bb5e8a-9eb0-410e-b789-\
+0cc30cefa67e"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"OutputResponse\\\", \
+\\\"::\\\", \\\"invsys\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"",2,89,27,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926535031417*^9},ExpressionUUID->"8d896782-a362-45fa-96f6-\
+55a3f9934b72"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ListPlot","lpn",
+   "\"\\!\\(\\*RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"3.`\\\"\
+, \\\" \\\", \\\"s\\\"]], RowBox[List[RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]], \\\" \\\", RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"2.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Times[3.`, s]]], Times[Plus[1.`, s], \
+Plus[2.`, s]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s]], 1, List[], List[False, False], \
+False, Automatic, None, Automatic], List[]], \
+\\\"TransferFunctionModelFull\\\", Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s], Rule[AutoDelete, True], \
+Rule[Editable, True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \
+\\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\
+\\\", \\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \
+\\\"]\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"0.`\\\", \\\",\\\", \\\
+\"0.6415673986967542`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.4752848187499276`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"9.958084648635066`*^-17\\\"}], \\\",\\\", \\\"0.2608418389888008`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.1932363870390302`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"8.097310174527284`*^-17\\\"}], \\\",\\\", \
+\\\"0.10605037772378897`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.07856405212796123`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"4.938180963707474`*^-17\\\"}], \\\",\\\", \\\"0.0431168659865229`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.03194175994150789`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"2.6769527388694022`*^-17\\\"}], \\\",\\\", \
+\\\"0.017530009533221633`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.012986550470934728`\\\"}]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) is not a \
+list of numbers or pairs of numbers.\"",2,89,28,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926535132417*^9},ExpressionUUID->"cc6c4811-c96e-45e4-89b5-\
+47009a82ea11"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ToDiscreteTimeModel","ivar",
+   "\"\\!\\(\\*RowBox[{\\\"0\\\"}]\\) is not a valid variable.\"",2,89,29,
+   17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926535205417*^9},ExpressionUUID->"c2ff5ef9-ee83-4869-821b-\
+2def4c4c37f7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \
+\\!\\(\\*StyleBox[RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"::\\\", \\\"ivar\\\
+\"}], \\\"MessageName\\\"]\\) will be suppressed during this calculation.\"",
+   2,89,30,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.7459265352264175`*^9},ExpressionUUID->"b7c80a2e-2fad-4e2a-ac2e-\
+e2361b5726cb"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ListPlot","lpn",
+   "\"\\!\\(\\*RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"3.`\\\"\
+, \\\" \\\", \\\"s\\\"]], RowBox[List[RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]], \\\" \\\", RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"2.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Times[3.`, s]]], Times[Plus[1.`, s], \
+Plus[2.`, s]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s]], 1, List[], List[False, False], \
+False, Automatic, None, Automatic], List[]], \
+\\\"TransferFunctionModelFull\\\", Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s], Rule[AutoDelete, True], \
+Rule[Editable, True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \
+\\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\
+\\\", \\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \
+\\\"]\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"0.`\\\", \\\",\\\", \\\
+\"0.6415673986967542`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.4752848187499276`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"9.958084648635066`*^-17\\\"}], \\\",\\\", \\\"0.2608418389888008`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.1932363870390302`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"8.097310174527284`*^-17\\\"}], \\\",\\\", \
+\\\"0.10605037772378897`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.07856405212796123`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"4.938180963707474`*^-17\\\"}], \\\",\\\", \\\"0.0431168659865229`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.03194175994150789`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"2.6769527388694022`*^-17\\\"}], \\\",\\\", \
+\\\"0.017530009533221633`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.012986550470934728`\\\"}]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) is not a \
+list of numbers or pairs of numbers.\"",2,89,31,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926535310417*^9},ExpressionUUID->"d605ff1a-f6b8-4f5d-9c7a-\
+98635d2137db"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ListPlot","lpn",
+   "\"\\!\\(\\*RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{InterpretationBox[TemplateBox[List[FractionBox[RowBox[List[\\\"3.`\\\"\
+, \\\" \\\", \\\"s\\\"]], RowBox[List[RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"1.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]], \\\" \\\", RowBox[List[\\\"(\\\", \
+RowBox[List[RowBox[List[\\\"2.`\\\", \\\"\\\\[VeryThinSpace]\\\"]], \
+\\\"+\\\", \\\"s\\\"]], \\\")\\\"]]]]], \
+InterpretationBox[\\\"\\\\[InvisibleSpace]\\\", None], \
+List[TransferFunctionModel, List[False, False, List[False, False]], $Failed, \
+List[List[Control`CommonDump`$DUMMY$], List[Control`CommonDump`$DUMMY$]], \
+Function[InterpretationBox[Slot[1], \
+TransferFunctionModel[List[List[List[Times[3.`, s]]], Times[Plus[1.`, s], \
+Plus[2.`, s]]], s], Rule[AutoDelete, True], Rule[Editable, True], \
+Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]]], s, 1, 1, \
+Control`CountStates[TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s]], 1, List[], List[False, False], \
+False, Automatic, None, Automatic], List[]], \
+\\\"TransferFunctionModelFull\\\", Rule[DisplayFunction, \
+Function[TagBox[SubsuperscriptBox[RowBox[List[\\\"(\\\", \
+GridBox[List[List[Slot[1]]], Rule[AllowedDimensions, List[1, 1]], \
+Rule[AutoDelete, False], Rule[AllowScriptLevelChange, False], \
+Rule[ColumnAlignments, List[Center]], Rule[BaseStyle, List[Rule[Deployed, \
+False]]], Rule[GridBoxItemStyle, List[]], Rule[GridBoxDividers, \
+List[Rule[\\\"Rows\\\", List[False, List[False], False]], \
+Rule[\\\"Columns\\\", List[False, List[False], False]]]], \
+Rule[GridBoxBackground, List[Rule[\\\"Rows\\\", List[List[GrayLevel[1], \
+RGBColor[0.8`, 0.9`, 0.9`]]]]]]], \\\")\\\"]], Slot[2], \
+ButtonBox[GraphicsBox[List[RGBColor[0.8`, 0.85`, 0.85`], \
+EdgeForm[RGBColor[0.6`, 0.7`, 0.7`]], RectangleBox[List[0, 0], \
+Rule[RoundingRadius, Offset[2.5`]]], \
+InsetBox[StyleBox[\\\"\\\\[ScriptCapitalT]\\\", \
+Rule[Control`NonlinearModelsDump`LineColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`FrontFaceColor, GrayLevel[0]], \
+Rule[Control`NonlinearModelsDump`BackFaceColor, GrayLevel[0]], \
+Rule[GraphicsColor, GrayLevel[0]], Rule[FontSize, 12], Rule[FontColor, \
+GrayLevel[0]]], List[0.5`, 0.5`]]], Rule[ImageSize, 20]], \
+RuleDelayed[ButtonFunction, \
+Control`Typesetting`SystemsModelTypesetToggle[ButtonNotebook[], FE`CMObj]], \
+Rule[Evaluator, Automatic], Rule[Appearance, None]], Rule[MultilineFunction, \
+None]], EventHandlerTag[List[RuleDelayed[\\\"MouseEntered\\\", \
+List[Set[FE`CMObj, \
+MathLink`CallFrontEnd[FrontEnd`Value[FEPrivate`Self[]]]]]], \
+Rule[PassEventsDown, True], Rule[PassEventsUp, True]]]]]], \
+Rule[InterpretationFunction, Function[RowBox[List[\\\"TransferFunctionModel\\\
+\", \\\"[\\\", \\\"Unevaluated\\\", \\\"[\\\", RowBox[List[\\\"{\\\", \
+RowBox[List[\\\"{\\\", TemplateSlotSequence[List[1, 1], \\\",\\\"], \
+\\\"}\\\"]], \\\"}\\\"]], \\\"]\\\", \\\",\\\", \\\"s\\\", \\\",\\\", \
+\\\"SamplingPeriod\\\", \\\"->\\\", RowBox[List[Slot[2]]], \\\",\\\", \
+\\\"SystemsModelLabels\\\", \\\"->\\\", \\\"None\\\", \\\"]\\\"]]]], \
+Rule[Tooltip, TransferFunctionModel], Rule[BaseStyle, List[Rule[NumberMarks, \
+False]]]], TransferFunctionModel[List[List[List[Times[3.`, s]]], \
+Times[Plus[1.`, s], Plus[2.`, s]]], s], Rule[AutoDelete, True], \
+Rule[Editable, True], Rule[BaseStyle, \\\"TransferFunctionModelMinimal\\\"]], \
+\\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"0.`\\\", \\\",\\\", RowBox[{\\\"Method\
+\\\", \\\"\[Rule]\\\", \\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \
+\\\"]\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"0.`\\\", \\\",\\\", \\\
+\"0.6415673986967542`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.4752848187499276`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"9.958084648635066`*^-17\\\"}], \\\",\\\", \\\"0.2608418389888008`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.1932363870390302`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"8.097310174527284`*^-17\\\"}], \\\",\\\", \
+\\\"0.10605037772378897`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.07856405212796123`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"4.938180963707474`*^-17\\\"}], \\\",\\\", \\\"0.0431168659865229`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.03194175994150789`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"2.6769527388694022`*^-17\\\"}], \\\",\\\", \
+\\\"0.017530009533221633`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.012986550470934728`\\\"}]}], \\\"}\\\"}]}], \\\"]\\\"}]\\) is not a \
+list of numbers or pairs of numbers.\"",2,89,32,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.745926535435417*^9},ExpressionUUID->"ef07a126-5f70-4875-820b-\
+0d42d606d878"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"ListPlot\\\", \
+\\\"::\\\", \\\"lpn\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"",2,89,33,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724631659846`*^9, 3.7456039911966553`*^9, 
+  3.7456048750364337`*^9, 
+  3.7459265354664173`*^9},ExpressionUUID->"bb798424-b921-460e-a5e1-\
+bd9bdda39c52"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     GraphicsBox[{{}, {{{}, {}, {{
+           {RGBColor[1, 0, 0], PointSize[0.012833333333333334`], Thickness[
+            Large], LineBox[CompressedData["
+1:eJxTTMoPSmViYGCQBWIQDQEf7BlQgQM6f+Gioqgd7U+g6jgw+Py2JiyC2ff2
+Q/gCGPzUpMuMRzfP2QPhi2DwI1f9+L5w4wWoeRIYfO3sWN8fu09AzZPB4KvP
+mrz0UNh0qHkKGPxj4bwScmq7oeYpYfCXP2kXOiazBWqeCgb/t0kLa0V5D9Q8
+NQw+66NFnzKFl0HN08Dgz1y0bM7qqAVQ87Qw+Iw3cnx/3KmDmqeDwe8xmcyW
+/Hki1Dw9DP6TD9U+G2d07QcAkt99Mw==
+             "]]}}}}}, {}, {}, {{}, {}}, {{}, {}}},
+      AspectRatio->1,
+      Axes->{True, True},
+      AxesLabel->{None, None},
+      AxesOrigin->{0.78125, 0},
+      DisplayFunction->Identity,
+      Frame->{{True, True}, {True, True}},
+      FrameLabel->{{
+         FormBox["\"u(t)\"", TraditionalForm], None}, {
+         FormBox["\"n\"", TraditionalForm], 
+         FormBox["\"plant input u(nT)\"", TraditionalForm]}},
+      FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+      GridLines->{Automatic, Automatic},
+      GridLinesStyle->Dashing[{Small, Small}],
+      ImagePadding->All,
+      ImageSize->200,
+      Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+            (Identity[#]& )[
+             Part[#, 1]], 
+            (Identity[#]& )[
+             Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+            (Identity[#]& )[
+             Part[#, 1]], 
+            (Identity[#]& )[
+             Part[#, 2]]}& )}},
+      PlotRange->{{1., 15.}, {-0.4752848187499276, 0.6415673986967542}},
+      PlotRangeClipping->True,
+      PlotRangePadding->{{
+         Scaled[0.02], 
+         Scaled[0.02]}, {
+         Scaled[0.05], 
+         Scaled[0.05]}},
+      Ticks->{Automatic, Automatic}], 
+     RowBox[{"ListPlot", "[", 
+      RowBox[{
+       RowBox[{"OutputResponse", "[", 
+        RowBox[{
+         RowBox[{"ToDiscreteTimeModel", "[", 
+          RowBox[{
+           InterpretationBox[
+            TemplateBox[{FractionBox[
+               RowBox[{"3", " ", "s"}], 
+               RowBox[{
+                 RowBox[{"(", 
+                   RowBox[{"1", "+", "s"}], ")"}], " ", 
+                 RowBox[{"(", 
+                   RowBox[{"2", "+", "s"}], ")"}]}]],InterpretationBox[
+              "\[InvisibleSpace]", None],{
+              TransferFunctionModel, {
+               False, False, {False, False}}, $Failed, {{
+                Control`CommonDump`$DUMMY$}, {Control`CommonDump`$DUMMY$}}, 
+               InterpretationBox[#, 
+                
+                TransferFunctionModel[{{{3 $CellContext`s}}, (
+                   1 + $CellContext`s) (2 + $CellContext`s)}, $CellContext`s],
+                 AutoDelete -> True, Editable -> True, BaseStyle -> 
+                "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+               Control`CountStates[
+                
+                TransferFunctionModel[{{{3 $CellContext`s}}, (
+                   1 + $CellContext`s) (
+                   2 + $CellContext`s)}, $CellContext`s]], 1, {}, {
+               False, False}, False, Automatic, None, Automatic},{}},
+             "TransferFunctionModelFull",
+             BaseStyle->{NumberMarks -> False},
+             DisplayFunction->(TagBox[
+               SubsuperscriptBox[
+                RowBox[{"(", 
+                  
+                  GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> 
+                   False, AllowScriptLevelChange -> False, 
+                   ColumnAlignments -> {Center}, 
+                   BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+                   GridBoxDividers -> {
+                    "Rows" -> {False, {False}, False}, 
+                    "Columns" -> {False, {False}, False}}, 
+                   GridBoxBackground -> {"Rows" -> {{
+                    GrayLevel[1], 
+                    RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+                ButtonBox[
+                 GraphicsBox[{
+                   RGBColor[0.8, 0.85, 0.85], 
+                   EdgeForm[
+                    RGBColor[0.6, 0.7, 0.7]], 
+                   RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+                   InsetBox[
+                    StyleBox[
+                    "\[ScriptCapitalT]", 
+                    Control`NonlinearModelsDump`LineColor -> GrayLevel[0], 
+                    Control`NonlinearModelsDump`FrontFaceColor -> 
+                    GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+                    GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 
+                    12, FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 
+                  20], ButtonFunction :> 
+                 Control`Typesetting`SystemsModelTypesetToggle[
+                   ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, 
+                 Appearance -> None], MultilineFunction -> None], 
+               
+               EventHandlerTag[{
+                "MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+                    FrontEnd`Value[
+                    FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+                 True}]]& ),
+             
+             InterpretationFunction->(
+              RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+                RowBox[{"{", 
+                  RowBox[{"{", 
+                    TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",",
+                 "s", ",", "SamplingPeriod", "->", 
+                RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", 
+                "]"}]& ),
+             Tooltip->TransferFunctionModel],
+            
+            TransferFunctionModel[{{{3 $CellContext`s}}, (
+               1 + $CellContext`s) (2 + $CellContext`s)}, $CellContext`s],
+            AutoDelete->True,
+            BaseStyle->"TransferFunctionModelMinimal",
+            Editable->True], ",", "1.`", ",", "0", ",", 
+           RowBox[{"Method", "\[Rule]", "\<\"ZeroOrderHold\"\>"}]}], "]"}], 
+         ",", 
+         RowBox[{"{", 
+          RowBox[{"0.`", ",", "0.6415673986967542`", ",", 
+           RowBox[{"-", "0.4752848187499276`"}], ",", 
+           RowBox[{"-", "9.958084648635066`*^-17"}], ",", 
+           "0.2608418389888008`", ",", 
+           RowBox[{"-", "0.1932363870390302`"}], ",", 
+           RowBox[{"-", "8.097310174527284`*^-17"}], ",", 
+           "0.10605037772378897`", ",", 
+           RowBox[{"-", "0.07856405212796123`"}], ",", 
+           RowBox[{"-", "4.938180963707474`*^-17"}], ",", 
+           "0.0431168659865229`", ",", 
+           RowBox[{"-", "0.03194175994150789`"}], ",", 
+           RowBox[{"-", "2.6769527388694022`*^-17"}], ",", 
+           "0.017530009533221633`", ",", 
+           RowBox[{"-", "0.012986550470934728`"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+         RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+         RowBox[{"ImageSize", "\[Rule]", "200"}], ",", 
+         RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "14"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5`"}], ",", "0.5`"}], "}"}]}], "}"}]}], ",", 
+         RowBox[{"GridLines", "\[Rule]", "Automatic"}], ",", 
+         RowBox[{"GridLinesStyle", "\[Rule]", 
+          RowBox[{"Dashing", "[", 
+           RowBox[{"{", 
+            RowBox[{"Small", ",", "Small"}], "}"}], "]"}]}]}], "}"}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\<\"y(t)\"\>", ",", "None"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"\<\"n\"\>", ",", "\<\"plant output y(nT)\"\>"}], "}"}]}], 
+         "}"}]}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Thickness", "[", "Large", "]"}], ",", 
+          InterpretationBox[
+           ButtonBox[
+            TooltipBox[
+             GraphicsBox[{{{
+                 {GrayLevel[0], RectangleBox[{0, 0}]}}}, {{
+                 {GrayLevel[0], RectangleBox[{1, -1}]}}}, {{
+                 {RGBColor[0, 0, 1], RectangleBox[{0, -1}, {2, 1}]}}}},
+              AspectRatio->1,
+              Frame->True,
+              FrameStyle->RGBColor[0., 0., 0.6666666666666666],
+              FrameTicks->None,
+              
+              ImageSize->
+               Dynamic[{
+                Automatic, 
+                 1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])}],
+              PlotRangePadding->None],
+             "RGBColor[0, 0, 1]"],
+            Appearance->None,
+            BaseStyle->{},
+            BaselinePosition->Baseline,
+            ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+              If[
+               Not[
+                AbsoluteCurrentValue["Deployed"]], 
+               SelectionMove[Typeset`box$, All, Expression]; 
+               FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+               FrontEnd`Private`$ColorSelectorInitialColor = 
+                RGBColor[0, 0, 1]; 
+               FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+               MathLink`CallFrontEnd[
+                 FrontEnd`AttachCell[Typeset`box$, 
+                  FrontEndResource["RGBColorValueSelector"], {
+                  0, {Left, Bottom}}, {Left, Top}, 
+                  "ClosingActions" -> {
+                   "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+            DefaultBaseStyle->{},
+            Evaluator->Automatic,
+            Method->"Preemptive"],
+           RGBColor[0, 0, 1],
+           Editable->False,
+           Selectable->False]}], "}"}]}]}], "]"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{3.742235880071988*^9, 3.7455724638429847`*^9, 
+  3.7456039934372787`*^9, 3.745604877479931*^9, 
+  3.745926535583417*^9},ExpressionUUID->"dd6b1146-7f13-4403-98c5-\
+046ac6707ca0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"inputPlot", ",", "plantPlot"}], "}"}], ",", 
+   RowBox[{"PlotLabel", "\[Rule]", "\"\<input/output plot\>\""}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.742235872090293*^9, 
+  3.7422358720947847`*^9}},ExpressionUUID->"664a2319-eaaa-4fef-b214-\
+4229933c640f"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Show","gcomb",
+   "\"Could not combine the graphics objects in \
+\\!\\(\\*RowBox[{\\\"Show\\\", \\\"[\\\", RowBox[{RowBox[{\\\"{\\\", \
+RowBox[{GraphicsBox[List[List[], List[List[List[], List[], \
+List[Hue[Skeleton[3]], Directive[Skeleton[4]], LineBox[Skeleton[1]]]]], \
+List[], List[], List[List[], List[]], List[List[], List[]]], \
+List[Rule[DisplayFunction, Identity], Rule[PlotRangePadding, \
+List[List[Scaled[Skeleton[1]], Scaled[Skeleton[1]]], \
+List[Scaled[Skeleton[1]], Scaled[Skeleton[1]]]]], Rule[AxesOrigin, \
+List[0.78125`, 0]], Rule[PlotRange, List[List[1.`, 15.`], \
+List[-0.4752848187499276`, 0.6415673986967542`]]], Rule[PlotRangeClipping, \
+True], Rule[ImagePadding, All], Rule[DisplayFunction, Identity], \
+Rule[AspectRatio, 1], Rule[Axes, List[True, True]], Rule[AxesLabel, \
+List[None, None]], Rule[AxesOrigin, List[0.78125`, 0]], \
+RuleDelayed[DisplayFunction, Identity], Rule[Frame, List[List[True, True], \
+List[True, True]]], Rule[FrameLabel, List[List[FormBox[\\\"\\\\\\\"u(t)\\\\\\\
+\"\\\", TraditionalForm], None], List[FormBox[\\\"\\\\\\\"n\\\\\\\"\\\", \
+TraditionalForm], FormBox[\\\"\\\\\\\"plant input u(nT)\\\\\\\"\\\", \
+TraditionalForm]]]], Rule[FrameTicks, List[List[Automatic, Automatic], \
+List[Automatic, Automatic]]], Rule[GridLines, List[Automatic, Automatic]], \
+Rule[GridLinesStyle, Dashing[List[Small, Small]]], Rule[ImageSize, 200], \
+Rule[Method, List[Rule[\\\"CoordinatesToolOptions\\\", List[Skeleton[2]]]]], \
+Rule[PlotRange, List[List[1.`, 15.`], List[-0.4752848187499276`, \
+0.6415673986967542`]]], Rule[PlotRangeClipping, True], Rule[PlotRangePadding, \
+List[List[Scaled[Skeleton[1]], Scaled[Skeleton[1]]], \
+List[Scaled[Skeleton[1]], Scaled[Skeleton[1]]]]], Rule[Ticks, List[Automatic, \
+Automatic]]]], \\\",\\\", RowBox[{\\\"ListPlot\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"OutputResponse\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"ToDiscreteTimeModel\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"TransferFunctionModel\\\", \\\"[\\\", \
+RowBox[{RowBox[{\\\"{\\\", RowBox[{RowBox[{\\\"{\\\", RowBox[{\\\"\
+\[LeftSkeleton]\\\", \\\"1\\\", \\\"\[RightSkeleton]\\\"}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"Times\\\", \\\"[\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \
+\\\"2\\\", \\\"\[RightSkeleton]\\\"}], \\\"]\\\"}]}], \\\"}\\\"}], \\\",\\\", \
+\\\"s\\\"}], \\\"]\\\"}], \\\",\\\", \\\"1.`\\\", \\\",\\\", \\\"0\\\", \\\",\
+\\\", RowBox[{\\\"Method\\\", \\\"\[Rule]\\\", \
+\\\"\\\\\\\"ZeroOrderHold\\\\\\\"\\\"}]}], \\\"]\\\"}], \\\",\\\", RowBox[{\\\
+\"{\\\", RowBox[{\\\"0.`\\\", \\\",\\\", \\\"0.6415673986967542`\\\", \\\",\\\
+\", RowBox[{\\\"-\\\", \\\"0.4752848187499276`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"9.958084648635066`*^-17\\\"}], \\\",\\\", \
+\\\"0.2608418389888008`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.1932363870390302`\\\"}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"8.097310174527284`*^-17\\\"}], \\\",\\\", \
+RowBox[{\\\"\[LeftSkeleton]\\\", \\\"20\\\", \\\"\[RightSkeleton]\\\"}], \
+\\\",\\\", RowBox[{\\\"-\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \\\"20\\\", \\\
+\"\[RightSkeleton]\\\"}]}], \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"4.938180963707474`*^-17\\\"}], \\\",\\\", \\\"0.0431168659865229`\\\", \\\
+\",\\\", RowBox[{\\\"-\\\", \\\"0.03194175994150789`\\\"}], \\\",\\\", \
+RowBox[{\\\"-\\\", \\\"2.6769527388694022`*^-17\\\"}], \\\",\\\", \
+\\\"0.017530009533221633`\\\", \\\",\\\", RowBox[{\\\"-\\\", \
+\\\"0.012986550470934728`\\\"}]}], \\\"}\\\"}]}], \\\"]\\\"}], \\\",\\\", \
+RowBox[{\\\"\[LeftSkeleton]\\\", \\\"2\\\", \\\"\[RightSkeleton]\\\"}], \\\",\
+\\\", RowBox[{\\\"PlotStyle\\\", \\\"\[Rule]\\\", RowBox[{\\\"\[LeftSkeleton]\
+\\\", \\\"1\\\", \\\"\[RightSkeleton]\\\"}]}]}], \\\"]\\\"}]}], \\\"}\\\"}], \
+\\\",\\\", RowBox[{\\\"\[LeftSkeleton]\\\", \\\"1\\\", \\\"\[RightSkeleton]\\\
+\"}]}], \\\"]\\\"}]\\).\"",2,91,34,17970730395363555043,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.7455724639469843`*^9, 3.7456039936591415`*^9, 
+  3.7456048776967916`*^9, 
+  3.745926535673417*^9},ExpressionUUID->"7021df2d-d8c2-43a4-b3d5-\
+fe1f7166f3ad"],
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     GraphicsBox[{{}, {{{}, {}, {{
+           {RGBColor[1, 0, 0], PointSize[0.012833333333333334`], Thickness[
+            Large], LineBox[CompressedData["
+1:eJxTTMoPSmViYGCQBWIQDQEf7BlQgQM6f+Gioqgd7U+g6jgw+Py2JiyC2ff2
+Q/gCGPzUpMuMRzfP2QPhi2DwI1f9+L5w4wWoeRIYfO3sWN8fu09AzZPB4KvP
+mrz0UNh0qHkKGPxj4bwScmq7oeYpYfCXP2kXOiazBWqeCgb/t0kLa0V5D9Q8
+NQw+66NFnzKFl0HN08Dgz1y0bM7qqAVQ87Qw+Iw3cnx/3KmDmqeDwe8xmcyW
+/Hki1Dw9DP6TD9U+G2d07QcAkt99Mw==
+             "]]}}}}}, {}, {}, {{}, {}}, {{}, {}}},
+      AspectRatio->1,
+      Axes->{True, True},
+      AxesLabel->{None, None},
+      AxesOrigin->{0.78125, 0},
+      DisplayFunction->Identity,
+      Frame->{{True, True}, {True, True}},
+      FrameLabel->{{
+         FormBox["\"u(t)\"", TraditionalForm], None}, {
+         FormBox["\"n\"", TraditionalForm], 
+         FormBox["\"plant input u(nT)\"", TraditionalForm]}},
+      FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+      GridLines->{Automatic, Automatic},
+      GridLinesStyle->Dashing[{Small, Small}],
+      ImagePadding->All,
+      ImageSize->200,
+      Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+            (Identity[#]& )[
+             Part[#, 1]], 
+            (Identity[#]& )[
+             Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+            (Identity[#]& )[
+             Part[#, 1]], 
+            (Identity[#]& )[
+             Part[#, 2]]}& )}},
+      PlotRange->{{1., 15.}, {-0.4752848187499276, 0.6415673986967542}},
+      PlotRangeClipping->True,
+      PlotRangePadding->{{
+         Scaled[0.02], 
+         Scaled[0.02]}, {
+         Scaled[0.05], 
+         Scaled[0.05]}},
+      Ticks->{Automatic, Automatic}], ",", 
+     RowBox[{"ListPlot", "[", 
+      RowBox[{
+       RowBox[{"OutputResponse", "[", 
+        RowBox[{
+         RowBox[{"ToDiscreteTimeModel", "[", 
+          RowBox[{
+           InterpretationBox[
+            TemplateBox[{FractionBox[
+               RowBox[{"3", " ", "s"}], 
+               RowBox[{
+                 RowBox[{"(", 
+                   RowBox[{"1", "+", "s"}], ")"}], " ", 
+                 RowBox[{"(", 
+                   RowBox[{"2", "+", "s"}], ")"}]}]],InterpretationBox[
+              "\[InvisibleSpace]", None],{
+              TransferFunctionModel, {
+               False, False, {False, False}}, $Failed, {{
+                Control`CommonDump`$DUMMY$}, {Control`CommonDump`$DUMMY$}}, 
+               InterpretationBox[#, 
+                
+                TransferFunctionModel[{{{3 $CellContext`s}}, (
+                   1 + $CellContext`s) (2 + $CellContext`s)}, $CellContext`s],
+                 AutoDelete -> True, Editable -> True, BaseStyle -> 
+                "TransferFunctionModelMinimal"]& , $CellContext`s, 1, 1, 
+               Control`CountStates[
+                
+                TransferFunctionModel[{{{3 $CellContext`s}}, (
+                   1 + $CellContext`s) (
+                   2 + $CellContext`s)}, $CellContext`s]], 1, {}, {
+               False, False}, False, Automatic, None, Automatic},{}},
+             "TransferFunctionModelFull",
+             BaseStyle->{NumberMarks -> False},
+             DisplayFunction->(TagBox[
+               SubsuperscriptBox[
+                RowBox[{"(", 
+                  
+                  GridBox[{{#}}, AllowedDimensions -> {1, 1}, AutoDelete -> 
+                   False, AllowScriptLevelChange -> False, 
+                   ColumnAlignments -> {Center}, 
+                   BaseStyle -> {Deployed -> False}, GridBoxItemStyle -> {}, 
+                   GridBoxDividers -> {
+                    "Rows" -> {False, {False}, False}, 
+                    "Columns" -> {False, {False}, False}}, 
+                   GridBoxBackground -> {"Rows" -> {{
+                    GrayLevel[1], 
+                    RGBColor[0.8, 0.9, 0.9]}}}], ")"}], #2, 
+                ButtonBox[
+                 GraphicsBox[{
+                   RGBColor[0.8, 0.85, 0.85], 
+                   EdgeForm[
+                    RGBColor[0.6, 0.7, 0.7]], 
+                   RectangleBox[{0, 0}, RoundingRadius -> Offset[2.5]], 
+                   InsetBox[
+                    StyleBox[
+                    "\[ScriptCapitalT]", 
+                    Control`NonlinearModelsDump`LineColor -> GrayLevel[0], 
+                    Control`NonlinearModelsDump`FrontFaceColor -> 
+                    GrayLevel[0], Control`NonlinearModelsDump`BackFaceColor -> 
+                    GrayLevel[0], GraphicsColor -> GrayLevel[0], FontSize -> 
+                    12, FontColor -> GrayLevel[0]], {0.5, 0.5}]}, ImageSize -> 
+                  20], ButtonFunction :> 
+                 Control`Typesetting`SystemsModelTypesetToggle[
+                   ButtonNotebook[], FE`CMObj], Evaluator -> Automatic, 
+                 Appearance -> None], MultilineFunction -> None], 
+               
+               EventHandlerTag[{
+                "MouseEntered" :> {FE`CMObj = MathLink`CallFrontEnd[
+                    FrontEnd`Value[
+                    FEPrivate`Self[]]]}, PassEventsDown -> True, PassEventsUp -> 
+                 True}]]& ),
+             
+             InterpretationFunction->(
+              RowBox[{"TransferFunctionModel", "[", "Unevaluated", "[", 
+                RowBox[{"{", 
+                  RowBox[{"{", 
+                    TemplateSlotSequence[{1, 1}, ","], "}"}], "}"}], "]", ",",
+                 "s", ",", "SamplingPeriod", "->", 
+                RowBox[{#2}], ",", "SystemsModelLabels", "->", "None", 
+                "]"}]& ),
+             Tooltip->TransferFunctionModel],
+            
+            TransferFunctionModel[{{{3 $CellContext`s}}, (
+               1 + $CellContext`s) (2 + $CellContext`s)}, $CellContext`s],
+            AutoDelete->True,
+            BaseStyle->"TransferFunctionModelMinimal",
+            Editable->True], ",", "1.`", ",", "0", ",", 
+           RowBox[{"Method", "\[Rule]", "\<\"ZeroOrderHold\"\>"}]}], "]"}], 
+         ",", 
+         RowBox[{"{", 
+          RowBox[{"0.`", ",", "0.6415673986967542`", ",", 
+           RowBox[{"-", "0.4752848187499276`"}], ",", 
+           RowBox[{"-", "9.958084648635066`*^-17"}], ",", 
+           "0.2608418389888008`", ",", 
+           RowBox[{"-", "0.1932363870390302`"}], ",", 
+           RowBox[{"-", "8.097310174527284`*^-17"}], ",", 
+           "0.10605037772378897`", ",", 
+           RowBox[{"-", "0.07856405212796123`"}], ",", 
+           RowBox[{"-", "4.938180963707474`*^-17"}], ",", 
+           "0.0431168659865229`", ",", 
+           RowBox[{"-", "0.03194175994150789`"}], ",", 
+           RowBox[{"-", "2.6769527388694022`*^-17"}], ",", 
+           "0.017530009533221633`", ",", 
+           RowBox[{"-", "0.012986550470934728`"}]}], "}"}]}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", "All"}], ",", 
+         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+         RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+         RowBox[{"ImageSize", "\[Rule]", "200"}], ",", 
+         RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "14"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "0.5`"}], ",", "0.5`"}], "}"}]}], "}"}]}], ",", 
+         RowBox[{"GridLines", "\[Rule]", "Automatic"}], ",", 
+         RowBox[{"GridLinesStyle", "\[Rule]", 
+          RowBox[{"Dashing", "[", 
+           RowBox[{"{", 
+            RowBox[{"Small", ",", "Small"}], "}"}], "]"}]}]}], "}"}], ",", 
+       RowBox[{"FrameLabel", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"\<\"y(t)\"\>", ",", "None"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"\<\"n\"\>", ",", "\<\"plant output y(nT)\"\>"}], "}"}]}], 
+         "}"}]}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"Thickness", "[", "Large", "]"}], ",", 
+          InterpretationBox[
+           ButtonBox[
+            TooltipBox[
+             GraphicsBox[{{{
+                 {GrayLevel[0], RectangleBox[{0, 0}]}}}, {{
+                 {GrayLevel[0], RectangleBox[{1, -1}]}}}, {{
+                 {RGBColor[0, 0, 1], RectangleBox[{0, -1}, {2, 1}]}}}},
+              AspectRatio->1,
+              Frame->True,
+              FrameStyle->RGBColor[0., 0., 0.6666666666666666],
+              FrameTicks->None,
+              
+              ImageSize->
+               Dynamic[{
+                Automatic, 
+                 1.35 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                  Magnification])}],
+              PlotRangePadding->None],
+             "RGBColor[0, 0, 1]"],
+            Appearance->None,
+            BaseStyle->{},
+            BaselinePosition->Baseline,
+            ButtonFunction:>With[{Typeset`box$ = EvaluationBox[]}, 
+              If[
+               Not[
+                AbsoluteCurrentValue["Deployed"]], 
+               SelectionMove[Typeset`box$, All, Expression]; 
+               FrontEnd`Private`$ColorSelectorInitialAlpha = 1; 
+               FrontEnd`Private`$ColorSelectorInitialColor = 
+                RGBColor[0, 0, 1]; 
+               FrontEnd`Private`$ColorSelectorUseMakeBoxes = True; 
+               MathLink`CallFrontEnd[
+                 FrontEnd`AttachCell[Typeset`box$, 
+                  FrontEndResource["RGBColorValueSelector"], {
+                  0, {Left, Bottom}}, {Left, Top}, 
+                  "ClosingActions" -> {
+                   "SelectionDeparture", "ParentChanged", "EvaluatorQuit"}]]]],
+            DefaultBaseStyle->{},
+            Evaluator->Automatic,
+            Method->"Preemptive"],
+           RGBColor[0, 0, 1],
+           Editable->False,
+           Selectable->False]}], "}"}]}]}], "]"}]}], "}"}], ",", 
+   RowBox[{"PlotLabel", "\[Rule]", "\<\"input/output plot\"\>"}]}], 
+  "]"}]], "Output",
+ CellChangeTimes->{3.742235883428871*^9, 3.7455724640439844`*^9, 
+  3.7456039938480263`*^9, 3.7456048778826833`*^9, 
+  3.745926535764417*^9},ExpressionUUID->"270ae164-eff3-434f-89b4-\
+3c964c66a4fc"]
+}, Open  ]]
+}, Open  ]]
+}, Closed]],
+
+Cell["IIR-Filters", "Subchapter",
+ CellChangeTimes->{{3.7419411819653463`*^9, 
+  3.741941185794346*^9}},ExpressionUUID->"ebefa613-c268-40a4-b4ac-\
+16c465634f1d"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{958, 1028},
+WindowMargins->{{Automatic, -1227}, {Automatic, 8}},
+FrontEndVersion->"11.1 for Microsoft Windows (64-bit) (March 13, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 204, 4, 30, "Input", "ExpressionUUID" -> \
+"576125cf-10ea-49ad-92dd-ed8eb72ee148"],
+Cell[787, 28, 357, 8, 21, "Message", "ExpressionUUID" -> \
+"7d502946-d64e-4ffc-848d-1cc2b498c477"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1181, 41, 308, 8, 30, "Input", "ExpressionUUID" -> \
+"6375ab39-f7ef-4d26-9069-9a83ad4197cb"],
+Cell[1492, 51, 217, 6, 30, "Output", "ExpressionUUID" -> \
+"503ef154-a23c-4dc3-ae18-5aa2360f3a88"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1746, 62, 345, 5, 101, "Title", "ExpressionUUID" -> \
+"fc94f7af-45cb-471f-861c-affe7c0179f9"],
+Cell[CellGroupData[{
+Cell[2116, 71, 186, 3, 72, "Chapter", "ExpressionUUID" -> \
+"c4e2ca6c-dd77-4d91-b0ed-6511103f10d1"],
+Cell[2305, 76, 522, 9, 30, "Text", "ExpressionUUID" -> \
+"ede551a5-e33b-4017-9d77-6ee35e84426f"],
+Cell[CellGroupData[{
+Cell[2852, 89, 170, 3, 67, "Subchapter", "ExpressionUUID" -> \
+"6161c84e-ed37-4040-a0cb-bd6fe5428cb3"],
+Cell[CellGroupData[{
+Cell[3047, 96, 155, 3, 49, "Subsection", "ExpressionUUID" -> \
+"118732eb-cab0-4ea1-8565-b4dbae47df9a"],
+Cell[3205, 101, 371, 7, 49, "Text", "ExpressionUUID" -> \
+"7c745157-f422-487b-a51a-10eb6fa29d1d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3613, 113, 205, 3, 49, "Subsection", "ExpressionUUID" -> \
+"37416bf9-f06c-4dbe-8797-450e3a417ec1"],
+Cell[CellGroupData[{
+Cell[3843, 120, 987, 28, 88, "Input", "ExpressionUUID" -> \
+"f0608e6a-9404-452c-9904-0da9eb17cc2b"],
+Cell[4833, 150, 527, 14, 46, "Output", "ExpressionUUID" -> \
+"f54484ff-9be2-46cf-b7fc-68705e54db5b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5397, 169, 1062, 29, 69, "Input", "ExpressionUUID" -> \
+"bbcf9ff4-ca23-4f49-9c73-0b2d307d83e7"],
+Cell[6462, 200, 1144, 27, 33, "Output", "ExpressionUUID" -> \
+"a4c41534-a7ad-4166-ae60-7181241deca7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7643, 232, 320, 8, 30, "Input", "ExpressionUUID" -> \
+"601e75e6-ea3d-49de-9582-31494fd8f44f"],
+Cell[7966, 242, 2393, 72, 188, "Output", "ExpressionUUID" -> \
+"53f340b3-d1d8-46bd-a6d1-32b72ae67932"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10396, 319, 344, 8, 30, "Input", "ExpressionUUID" -> \
+"0902e689-23ff-45ab-b03e-d0802533c9fc"],
+Cell[10743, 329, 2460, 72, 200, "Output", "ExpressionUUID" -> \
+"798c7807-69e2-490b-b679-1b8bfee96c8b"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13252, 407, 174, 3, 49, "Subsection", "ExpressionUUID" -> \
+"8f3104a6-0a6a-4eab-9296-110e2eec2fa5"],
+Cell[CellGroupData[{
+Cell[13451, 414, 1188, 33, 50, "Input", "ExpressionUUID" -> \
+"05da5885-a7b2-4e57-ae01-4ce2691e6fa1"],
+Cell[14642, 449, 4089, 89, 104, "Output", "ExpressionUUID" -> \
+"1bacf893-f0a2-4955-b83a-23bc9206f6a8"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18792, 545, 161, 3, 67, "Subchapter", "ExpressionUUID" -> \
+"2b30e277-d5a1-4ec8-a722-be5dc7f539a1"],
+Cell[CellGroupData[{
+Cell[18978, 552, 470, 14, 30, "Input", "ExpressionUUID" -> \
+"8cfcb47f-fed7-427d-89c2-baa538e7eb7b"],
+Cell[19451, 568, 939, 30, 46, "Output", "ExpressionUUID" -> \
+"0db3c7a7-1170-4b74-9267-101e6347a9e5"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20427, 603, 844, 22, 50, "Input", "ExpressionUUID" -> \
+"5c048cd5-762e-4a3f-ac3e-1034e7e0f975"],
+Cell[21274, 627, 3518, 75, 236, "Output", "ExpressionUUID" -> \
+"79eb4096-f4fc-471b-8bf3-de22c890f083"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24829, 707, 329, 8, 50, "Input", "ExpressionUUID" -> \
+"94e3620c-6169-4db2-9fd3-d1d67115a554"],
+Cell[25161, 717, 704, 14, 30, "Output", "ExpressionUUID" -> \
+"b98b515d-0900-47c5-9168-c2ad9562c8b1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25902, 736, 1866, 49, 107, "Input", "ExpressionUUID" -> \
+"127f3b5c-604e-4a4f-b065-1344252e2af0"],
+Cell[27771, 787, 21636, 371, 239, "Output", "ExpressionUUID" -> \
+"e081caff-2527-4c46-aced-fc7c18c2c498"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[49456, 1164, 196, 3, 51, "Subchapter", "ExpressionUUID" -> \
+"13a4633d-9e78-4aee-88d0-b74de97f01bc"],
+Cell[CellGroupData[{
+Cell[49677, 1171, 454, 14, 30, "Input", "ExpressionUUID" -> \
+"3b55a01e-936d-4723-a7ae-79d1593757b4"],
+Cell[50134, 1187, 3190, 68, 53, "Output", "ExpressionUUID" -> \
+"e69b1abd-eec2-43e4-b1b6-f7d7ed05d5b2"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53361, 1260, 333, 8, 30, "Input", "ExpressionUUID" -> \
+"6472eb30-0b15-4003-b99f-34538ccebbab"],
+Cell[53697, 1270, 382, 9, 21, "Message", "ExpressionUUID" -> \
+"c52a40ce-d842-4da4-9d26-9e2936d7e3ce"],
+Cell[54082, 1281, 382, 9, 21, "Message", "ExpressionUUID" -> \
+"e857bd23-b1a8-4780-bd18-1e7ae7aeddba"],
+Cell[54467, 1292, 3479, 73, 53, "Output", "ExpressionUUID" -> \
+"153c33a9-3603-4efb-834b-ac39488982ef"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[57983, 1370, 269, 7, 30, "Input", "ExpressionUUID" -> \
+"3b0439a8-d8c9-4604-9c54-0e6e5c836e82"],
+Cell[58255, 1379, 544, 12, 21, "Message", "ExpressionUUID" -> \
+"cbf607fd-d63f-4de5-83b7-e95eeab6e350"],
+Cell[58802, 1393, 3843, 62, 47, "Message", "ExpressionUUID" -> \
+"8f338aed-d0f6-4339-87e6-f594a74225ff"],
+Cell[62648, 1457, 544, 12, 21, "Message", "ExpressionUUID" -> \
+"e3472749-9f2d-417b-8cb8-babaa77848d4"],
+Cell[63195, 1471, 3593, 75, 53, "Output", "ExpressionUUID" -> \
+"fa1487ef-4259-4371-91aa-f9d52b7f8912"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[66825, 1551, 1330, 38, 88, "Input", "ExpressionUUID" -> \
+"d048b757-4a9a-4283-b465-4e8f9ccd3d40"],
+Cell[68158, 1591, 3776, 61, 67, "Message", "ExpressionUUID" -> \
+"7af8dbfb-a10a-458f-b524-18000c6f6675"],
+Cell[71937, 1654, 3776, 61, 67, "Message", "ExpressionUUID" -> \
+"be9fc41c-f082-491c-8bd2-11fdd8f96fa7"],
+Cell[75716, 1717, 380, 9, 21, "Message", "ExpressionUUID" -> \
+"41f268f2-a9f5-4e13-9019-78264aea95c0"],
+Cell[76099, 1728, 3818, 61, 67, "Message", "ExpressionUUID" -> \
+"20bd92c6-00dd-4e4e-938e-bb432e085613"],
+Cell[79920, 1791, 383, 9, 21, "Message", "ExpressionUUID" -> \
+"8610437d-5d9d-492c-9afd-b8ad5a7012fd"],
+Cell[80306, 1802, 3883, 62, 67, "Message", "ExpressionUUID" -> \
+"0e4df557-6ffa-41fa-b3c7-dea6f32517a8"],
+Cell[84192, 1866, 5247, 81, 97, "Message", "ExpressionUUID" -> \
+"5962d302-6de4-46de-883a-d8ea065cacb7"],
+Cell[89442, 1949, 383, 9, 21, "Message", "ExpressionUUID" -> \
+"2940df51-22dc-4142-85c9-870c13694b16"],
+Cell[89828, 1960, 485, 11, 21, "Message", "ExpressionUUID" -> \
+"02de3052-8181-4999-9423-d7688f92be21"],
+Cell[90316, 1973, 3819, 61, 67, "Message", "ExpressionUUID" -> \
+"17d222e7-c4c5-4553-b1f6-8a37cee15a38"],
+Cell[94138, 2036, 478, 10, 21, "Message", "ExpressionUUID" -> \
+"6cb24394-6a19-4cc8-a8cc-3f122304a343"],
+Cell[94619, 2048, 5245, 81, 97, "Message", "ExpressionUUID" -> \
+"f0203542-4559-4f67-95c5-663cf1949480"],
+Cell[99867, 2131, 5245, 81, 97, "Message", "ExpressionUUID" -> \
+"32da9c30-0e0d-473a-9356-a0a36d35a20d"],
+Cell[105115, 2214, 471, 10, 21, "Message", "ExpressionUUID" -> \
+"9958814b-2da3-43da-9890-73f708cf656c"],
+Cell[105589, 2226, 5860, 119, 170, "Output", "ExpressionUUID" -> \
+"f8913d16-f174-497e-ae7e-2c56d88aacf6"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[111498, 2351, 212, 7, 51, "Subchapter", "ExpressionUUID" -> \
+"86bc31db-21ba-4e66-bc06-29c79568a6f5"],
+Cell[CellGroupData[{
+Cell[111735, 2362, 260, 6, 30, "Input", "ExpressionUUID" -> \
+"3ccea632-22ad-44e2-bd4a-f9cd1553bfda"],
+Cell[111998, 2370, 299, 6, 30, "Output", "ExpressionUUID" -> \
+"ec35c0f2-1f90-4400-9fcd-f74fb905b496"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[112334, 2381, 225, 8, 49, "Subsection", "ExpressionUUID" -> \
+"1aba2176-a37d-4912-8656-b2ab8000ec7f"],
+Cell[CellGroupData[{
+Cell[112584, 2393, 369, 11, 30, "Input", "ExpressionUUID" -> \
+"386de37c-9bcb-4c08-ba1b-bc9f8b294127"],
+Cell[112956, 2406, 445, 10, 21, "Message", "ExpressionUUID" -> \
+"a7ec3526-4bdb-4f32-bf04-d235136e943f"],
+Cell[113404, 2418, 209, 4, 30, "Output", "ExpressionUUID" -> \
+"a4160066-57b1-491a-82b5-63f583e53862"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[113650, 2427, 1225, 33, 88, "Input", "ExpressionUUID" -> \
+"847bca78-c2e6-4042-96d0-edbf7213dcff"],
+Cell[114878, 2462, 1318, 37, 257, "Output", "ExpressionUUID" -> \
+"743a72c0-4396-43d8-b0e6-96646d623f7c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[116245, 2505, 168, 3, 49, "Subsection", "ExpressionUUID" -> \
+"8044370b-0ae3-465f-b6a5-92135e740fdf"],
+Cell[CellGroupData[{
+Cell[116438, 2512, 1365, 44, 145, "Input", "ExpressionUUID" -> \
+"81a065cb-8793-4082-b798-fe20eb89103f"],
+Cell[117806, 2558, 385, 9, 21, "Message", "ExpressionUUID" -> \
+"3ac700ae-f929-42b7-9b9f-f31c73e2d89b"],
+Cell[118194, 2569, 3566, 76, 55, "Output", "ExpressionUUID" -> \
+"1cf82c47-5c89-4af8-a136-f87adcc74e28"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[121797, 2650, 2584, 72, 145, "Input", "ExpressionUUID" -> \
+"44204012-9d43-4dd9-b0f5-d84eb05f5bd1"],
+Cell[124384, 2724, 3900, 62, 70, "Message", "ExpressionUUID" -> \
+"46479e59-710a-4f27-aa3d-41f7ca337f91"],
+Cell[128287, 2788, 387, 9, 21, "Message", "ExpressionUUID" -> \
+"8f885b03-0cf4-4e00-a707-7777d8a51ea7"],
+Cell[128677, 2799, 3966, 63, 70, "Message", "ExpressionUUID" -> \
+"6c9b5ddf-1220-4de3-9c17-694db1b55c5c"],
+Cell[132646, 2864, 391, 9, 21, "Message", "ExpressionUUID" -> \
+"dc3c585d-52ff-4f54-a453-28cc58209820"],
+Cell[133040, 2875, 4020, 65, 70, "Message", "ExpressionUUID" -> \
+"e6bb5e8a-9eb0-410e-b789-0cc30cefa67e"],
+Cell[137063, 2942, 484, 10, 21, "Message", "ExpressionUUID" -> \
+"8d896782-a362-45fa-96f6-55a3f9934b72"],
+Cell[137550, 2954, 4877, 77, 103, "Message", "ExpressionUUID" -> \
+"cc6c4811-c96e-45e4-89b5-47009a82ea11"],
+Cell[142430, 3033, 387, 9, 21, "Message", "ExpressionUUID" -> \
+"c2ff5ef9-ee83-4869-821b-2def4c4c37f7"],
+Cell[142820, 3044, 493, 11, 21, "Message", "ExpressionUUID" -> \
+"b7c80a2e-2fad-4e2a-ac2e-e2361b5726cb"],
+Cell[143316, 3057, 4877, 77, 103, "Message", "ExpressionUUID" -> \
+"d605ff1a-f6b8-4f5d-9c7a-98635d2137db"],
+Cell[148196, 3136, 4877, 77, 103, "Message", "ExpressionUUID" -> \
+"ef07a126-5f70-4875-820b-0d42d606d878"],
+Cell[153076, 3215, 477, 10, 21, "Message", "ExpressionUUID" -> \
+"bb798424-b921-460e-a5e1-bd9bdda39c52"],
+Cell[153556, 3227, 10170, 230, 347, "Output", "ExpressionUUID" -> \
+"dd6b1146-7f13-4403-98c5-046ac6707ca0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[163763, 3462, 338, 9, 30, "Input", "ExpressionUUID" -> \
+"664a2319-eaaa-4fef-b214-4229933c640f"],
+Cell[164104, 3473, 4076, 62, 326, "Message", "ExpressionUUID" -> \
+"7021df2d-d8c2-43a4-b3d5-fe1f7166f3ad"],
+Cell[168183, 3537, 10195, 230, 424, "Output", "ExpressionUUID" -> \
+"270ae164-eff3-434f-89b4-3c964c66a4fc"]
+}, Open  ]]
+}, Open  ]]
+}, Closed]],
+Cell[178417, 3772, 161, 3, 51, "Subchapter", "ExpressionUUID" -> \
+"ebefa613-c268-40a4-b4ac-16c465634f1d"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
