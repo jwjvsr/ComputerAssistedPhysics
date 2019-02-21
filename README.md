@@ -8,6 +8,7 @@ The structure of the repository consists of four main parts, related to the quar
 
 ## Doc
 Contains a presentation on the embedding of CAS in the Applied Physics curriculum.
+This folder also contains a cheat-sheet.
 
 ## Main parts:
 1. Part 1: introduction + vector calculus and Electricity and Magnetism
